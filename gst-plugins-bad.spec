@@ -1,4 +1,5 @@
 %define build_experimental	0
+%define _disable_ld_no_undefined 1
 %{?_with_experimental: %{expand: %%global build_experimental 1}}
 %define build_amrwb	0
 %define build_faac	0
