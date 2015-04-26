@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   gst-plugins-bad-1.4.4.tar.xz: 7263f9877faffe6249bec7c68de4993f66678cfc
+sources:
+  gst-plugins-bad-1.4.5.tar.xz: 81ae4e15bcce8d353b83c1d2559441925794c42e
