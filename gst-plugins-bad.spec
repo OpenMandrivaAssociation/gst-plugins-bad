@@ -118,7 +118,6 @@ BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(slv2) >= 0.6.6
 BuildRequires:	pkgconfig(sndfile)
 BuildRequires:	pkgconfig(soundtouch)
-BuildRequires:	pkgconfig(spandsp) >= 0.0.6
 BuildRequires:	pkgconfig(libusb-1.0)
 %ifnarch %{mipsx}
 BuildRequires:	pkgconfig(valgrind)
@@ -623,7 +622,6 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstopenal.so
 %{_libdir}/gstreamer-%{api}/libgstrfbsrc.so
 %{_libdir}/gstreamer-%{api}/libgstsmoothstreaming.so
-%{_libdir}/gstreamer-%{api}/libgstspandsp.so
 %{_libdir}/gstreamer-%{api}/libgstvideofiltersbad.so
 %{_libdir}/gstreamer-%{api}/libgstyadif.so
 %{_libdir}/gstreamer-%{api}/libgstcompositor.so
