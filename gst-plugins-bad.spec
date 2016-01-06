@@ -32,6 +32,7 @@
 %define bname	gstreamer%{api}
 %define api	1.0
 %define major	0
+%define libadaptivedemux	%mklibname gstadaptivedemux %{api} %{major}
 %define	libbasecamerabinsrc	%mklibname gstbasecamerabinsrc %{api} %{major}
 %define	libphotography		%mklibname gstphotography %{api} %{major}
 %define	libcodecparsers		%mklibname gstcodecparsers %{api} %{major}
@@ -179,6 +180,13 @@ work on.
 This package is in restricted repository as it violates some patents.
 %endif
 
+%package -n %{libadaptivedemux}
+Summary:        Libraries for GStreamer streaming-media framework
+Group:          System/Libraries
+
+%description -n %{libadaptivedemux}
+This package contains the libraries for %{name}%{api}.
+
 %package -n %{libbasecamerabinsrc}
 Summary:	Libraries for GStreamer streaming-media framework
 Group:		System/Libraries
@@ -260,6 +268,7 @@ This package contains the libraries for %{name}%{api}.
 %package -n %{devname}
 Summary:	Libraries and include files for GStreamer streaming-media framework
 Group:		Development/C
+Requires:	%{libadaptivedemux} = %{version}-%{release}
 Requires:	%{libbasecamerabinsrc} = %{version}-%{release}
 Requires:	%{libphotography} = %{version}-%{release}
 Requires:	%{libcodecparsers} = %{version}-%{release}
@@ -541,11 +550,14 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstaudiovisualizers.so
 %{_libdir}/gstreamer-%{api}/libgstautoconvert.so
 %{_libdir}/gstreamer-%{api}/libgstbayer.so
+%{_libdir}/gstreamer-%{api}/libgstbluez.so
+%{_libdir}/gstreamer-%{api}/libgstbs2b.so
 %{_libdir}/gstreamer-%{api}/libgstcamerabin2.so
 %{_libdir}/gstreamer-%{api}/libgstchromaprint.so
 %{_libdir}/gstreamer-%{api}/libgstcoloreffects.so
 %{_libdir}/gstreamer-%{api}/libgstdataurisrc.so
 %{_libdir}/gstreamer-%{api}/libgstdebugutilsbad.so
+%{_libdir}/gstreamer-%{api}/libgstdtls.so
 %{_libdir}/gstreamer-%{api}/libgstdvb.so
 %{_libdir}/gstreamer-%{api}/libgstdvbsuboverlay.so
 %{_libdir}/gstreamer-%{api}/libgstdvdspu.so
@@ -557,6 +569,7 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstgaudieffects.so
 %{_libdir}/gstreamer-%{api}/libgstgdp.so
 %{_libdir}/gstreamer-%{api}/libgstgeometrictransform.so
+%{_libdir}/gstreamer-%{api}/libgstgtksink.so
 %{_libdir}/gstreamer-%{api}/libgstid3tag.so
 %{_libdir}/gstreamer-%{api}/libgstinter.so
 %{_libdir}/gstreamer-%{api}/libgstinterlace.so
@@ -578,6 +591,8 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstremovesilence.so
 %{_libdir}/gstreamer-%{api}/libgstresindvd.so
 %{_libdir}/gstreamer-%{api}/libgstrsvg.so
+%{_libdir}/gstreamer-%{api}/libgstrtpbad.so
+%{_libdir}/gstreamer-%{api}/libgstrtponvif.so
 %{_libdir}/gstreamer-%{api}/libgstsbc.so
 %{_libdir}/gstreamer-%{api}/libgstsdpelem.so
 %{_libdir}/gstreamer-%{api}/libgstsegmentclip.so
@@ -590,6 +605,7 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstmpegpsmux.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsdemux.so
 %{_libdir}/gstreamer-%{api}/libgstuvch264.so
+%{_libdir}/gstreamer-%{api}/libgstvcdsrc.so
 %{_libdir}/gstreamer-%{api}/libgstvdpau.so
 %{_libdir}/gstreamer-%{api}/libgstvideoparsersbad.so
 %{_libdir}/gstreamer-%{api}/libgstwaylandsink.so
@@ -613,6 +629,7 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstaudiomixer.so
 %{_libdir}/gstreamer-%{api}/libgstfbdevsink.so
 %{_libdir}/gstreamer-%{api}/libgstfreeverb.so
+%{_datadir}/gstreamer-%{api}/presets/GstFreeverb.prs
 %{_libdir}/gstreamer-%{api}/libgstivtc.so
 %{_libdir}/gstreamer-%{api}/libgstmidi.so
 %{_libdir}/gstreamer-%{api}/libgstmxf.so
@@ -657,6 +674,9 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstamrwbenc.so
 %endif
 
+%files -n %{libadaptivedemux}
+%{_libdir}/libgstadaptivedemux-%{api}.so.%{major}*
+
 %files -n %{libbasecamerabinsrc}
 %{_libdir}/libgstbasecamerabinsrc-%{api}.so.%{major}*
 
@@ -690,6 +710,7 @@ export CXX=g++
 %files -n %{devname}
 %doc docs/plugins/html
 %doc %{_datadir}/gtk-doc/html/
+%{_libdir}/libgstadaptivedemux-%{api}.so
 %{_libdir}/libgstbasecamerabinsrc-%{api}.so
 %{_libdir}/libgstcodecparsers-%{api}.so
 %{_libdir}/libgstphotography-%{api}.so
@@ -700,6 +721,7 @@ export CXX=g++
 %{_libdir}/libgstbadvideo-%{api}.so
 %{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstgl-%{api}.so
+%{_libdir}/gstreamer-%{api}/include/gst/gl
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/
 %{_includedir}/gstreamer-%{api}/gst/codecparsers/
 %{_includedir}/gstreamer-%{api}/gst/gl/
@@ -707,6 +729,7 @@ export CXX=g++
 %{_includedir}/gstreamer-%{api}/gst/insertbin
 %{_includedir}/gstreamer-%{api}/gst/mpegts
 %{_includedir}/gstreamer-%{api}/gst/uridownloader
+%{_datadir}/gir-1.0/GstGL-%{api}.gir
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_datadir}/gir-1.0/GstMpegts-%{api}.gir
 %{_libdir}/pkgconfig/gstreamer-plugins-bad-%{api}.pc
@@ -716,6 +739,7 @@ export CXX=g++
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 
 %files -n %{girname}
+%{_libdir}/girepository-1.0/GstGL-%{api}.typelib
 %{_libdir}/girepository-1.0/GstInsertBin-%{api}.typelib
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
 
