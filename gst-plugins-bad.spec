@@ -102,6 +102,7 @@ BuildRequires:	pkgconfig(libmodplug)
 BuildRequires:	pkgconfig(libmpg123)
 BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(libsrtp)
 BuildRequires:	pkgconfig(libofa) >= 0.9.3
 BuildRequires:	pkgconfig(libopenjpeg1)
 BuildRequires:	pkgconfig(libusb-1.0)
@@ -128,8 +129,16 @@ BuildRequires:	pkgconfig(zvbi-0.2)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
+BuildRequires:	pkgconfig(x265)
 %endif
 BuildRequires:	wildmidi-devel
+# For Qt sink
+BuildRequires:	pkgconfig(Qt5Core)
+BuildRequires:	pkgconfig(Qt5Gui)
+BuildRequires:	pkgconfig(Qt5Qml)
+BuildRequires:	pkgconfig(Qt5Quick)
+BuildRequires:	pkgconfig(Qt5X11Extras)
+
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -657,7 +666,9 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstvideofiltersbad.so
 %{_libdir}/gstreamer-%{api}/libgstvideoframe_audiolevel.so
 %{_libdir}/gstreamer-%{api}/libgstyadif.so
+%if %{build_plf}
 %{_libdir}/gstreamer-%{api}/libgstx265.so
+%endif
 %{_libdir}/gstreamer-%{api}/libgstcompositor.so
 %{_libdir}/gstreamer-%{api}/libgstivfparse.so
 %{_libdir}/gstreamer-%{api}/libgstjp2kdecimator.so
