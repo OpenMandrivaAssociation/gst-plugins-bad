@@ -51,7 +51,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.8.1
-Release:	2%{?extrarelsuffix}
+Release:	3%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -59,6 +59,7 @@ Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}
 Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
 # We don't ship a version of gtk3 that is built against wayland right now...
 Patch1:		gst-plugins-bad-no-gtkwayland.patch
+Patch2:		gst-plugins-bad-1.8.1-qt-5.7.patch
 
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm => 0.90
@@ -138,7 +139,7 @@ BuildRequires:	pkgconfig(Qt5Gui)
 BuildRequires:	pkgconfig(Qt5Qml)
 BuildRequires:	pkgconfig(Qt5Quick)
 BuildRequires:	pkgconfig(Qt5X11Extras)
-
+%rename gstreamer1.0-plugins-bad
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
