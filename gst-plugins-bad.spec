@@ -50,8 +50,8 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.8.1
-Release:	3%{?extrarelsuffix}
+Version:	1.10.2
+Release:	1%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -59,7 +59,6 @@ Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}
 Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
 # We don't ship a version of gtk3 that is built against wayland right now...
 Patch1:		gst-plugins-bad-no-gtkwayland.patch
-Patch2:		gst-plugins-bad-1.8.1-qt-5.7.patch
 
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm => 0.90
@@ -561,7 +560,7 @@ export HAVE_CXX="yes"
 	--enable-experimental
 %endif
 
-%make
+%make CXXFLAGS+="-std=gnu++14"
 
 %install
 %makeinstall_std
@@ -582,11 +581,13 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstchromaprint.so
 %{_libdir}/gstreamer-%{api}/libgstcoloreffects.so
 %{_libdir}/gstreamer-%{api}/libgstdataurisrc.so
+%{_libdir}/gstreamer-%{api}/libgstdc1394.so
 %{_libdir}/gstreamer-%{api}/libgstdebugutilsbad.so
 %{_libdir}/gstreamer-%{api}/libgstdtls.so
 %{_libdir}/gstreamer-%{api}/libgstdvb.so
 %{_libdir}/gstreamer-%{api}/libgstdvbsuboverlay.so
 %{_libdir}/gstreamer-%{api}/libgstdvdspu.so
+%{_libdir}/gstreamer-%{api}/libgstfdkaac.so
 %{_libdir}/gstreamer-%{api}/libgstfieldanalysis.so
 %{_libdir}/gstreamer-%{api}/libgstfestival.so
 %{_libdir}/gstreamer-%{api}/libgstfluidsynthmidi.so
@@ -600,7 +601,9 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstinterlace.so
 %{_libdir}/gstreamer-%{api}/libgstjpegformat.so
 %{_libdir}/gstreamer-%{api}/libgstkate.so
+%{_libdir}/gstreamer-%{api}/libgstkmssink.so
 %{_libdir}/gstreamer-%{api}/libgstladspa.so
+%{_libdir}/gstreamer-%{api}/libgstlv2.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsmux.so
 %{_libdir}/gstreamer-%{api}/libgstmimic.so
 %{_libdir}/gstreamer-%{api}/libgstmpegpsdemux.so
@@ -609,6 +612,7 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstopenjpeg.so
 %{_libdir}/gstreamer-%{api}/libgstpcapparse.so
 %{_libdir}/gstreamer-%{api}/libgstpnm.so
+%{_libdir}/gstreamer-%{api}/libgstqmlgl.so
 %{_libdir}/gstreamer-%{api}/libgstrawparse.so
 %{_libdir}/gstreamer-%{api}/libgstremovesilence.so
 %{_libdir}/gstreamer-%{api}/libgstresindvd.so
@@ -622,6 +626,7 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstsmooth.so
 %{_libdir}/gstreamer-%{api}/libgstspeed.so
 %{_libdir}/gstreamer-%{api}/libgstsubenc.so
+%{_libdir}/gstreamer-%{api}/libgsttimecode.so
 %{_libdir}/gstreamer-%{api}/libgstbz2.so
 %{_libdir}/gstreamer-%{api}/libgstmpegpsmux.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsdemux.so
