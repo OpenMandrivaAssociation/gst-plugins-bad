@@ -104,7 +104,7 @@ BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libsrtp)
 BuildRequires:	pkgconfig(libofa) >= 0.9.3
-BuildRequires:	pkgconfig(libopenjpeg1)
+BuildRequires:	pkgconfig(libopenjp2)
 BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(neon)
