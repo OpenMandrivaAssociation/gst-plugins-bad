@@ -124,12 +124,14 @@ BuildRequires:	pkgconfig(spandsp) >= 0.0.6
 BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(vdpau)
 BuildRequires:	pkgconfig(wayland-client)
+BuildRequires:	pkgconfig(wayland-egl)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zvbi-0.2)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
 BuildRequires:	pkgconfig(x265)
+BuildRequires:	pkgconfig(fdk-aac)
 %endif
 BuildRequires:	wildmidi-devel
 # For Qt sink
@@ -138,6 +140,9 @@ BuildRequires:	pkgconfig(Qt5Gui)
 BuildRequires:	pkgconfig(Qt5Qml)
 BuildRequires:	pkgconfig(Qt5Quick)
 BuildRequires:	pkgconfig(Qt5X11Extras)
+BuildRequires:	pkgconfig(Qt5WaylandClient)
+# vulkan support
+BuildRequires:	%{_lib}vulkan-devel
 %rename gstreamer1.0-plugins-bad
 
 %description
@@ -587,7 +592,9 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstdvb.so
 %{_libdir}/gstreamer-%{api}/libgstdvbsuboverlay.so
 %{_libdir}/gstreamer-%{api}/libgstdvdspu.so
+%if %{build_plf}
 %{_libdir}/gstreamer-%{api}/libgstfdkaac.so
+%endif
 %{_libdir}/gstreamer-%{api}/libgstfieldanalysis.so
 %{_libdir}/gstreamer-%{api}/libgstfestival.so
 %{_libdir}/gstreamer-%{api}/libgstfluidsynthmidi.so
@@ -791,10 +798,8 @@ export HAVE_CXX="yes"
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-player-%{api}.pc
 
-
 %files -n %{girname}
 %{_libdir}/girepository-1.0/GstGL-%{api}.typelib
 %{_libdir}/girepository-1.0/GstInsertBin-%{api}.typelib
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
 %{_libdir}/girepository-1.0/GstPlayer-%{api}.typelib
-
