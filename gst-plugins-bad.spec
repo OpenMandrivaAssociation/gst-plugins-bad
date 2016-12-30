@@ -670,7 +670,6 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstnetsim.so
 %{_libdir}/gstreamer-%{api}/libgstopenal.so
 %{_libdir}/gstreamer-%{api}/libgstopusparse.so
-%{_libdir}/gstreamer-%{api}/libgstqtsink.so
 %{_libdir}/gstreamer-%{api}/libgstrfbsrc.so
 %{_libdir}/gstreamer-%{api}/libgstsmoothstreaming.so
 %{_libdir}/gstreamer-%{api}/libgstspandsp.so
