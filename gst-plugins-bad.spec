@@ -50,7 +50,7 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.8.1
+Version:	1.10.2
 Release:	1%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
@@ -104,7 +104,7 @@ BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libsrtp)
 BuildRequires:	pkgconfig(libofa) >= 0.9.3
-BuildRequires:	pkgconfig(libopenjpeg1)
+BuildRequires:	pkgconfig(libopenjp2)
 BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(neon)
@@ -124,12 +124,14 @@ BuildRequires:	pkgconfig(spandsp) >= 0.0.6
 BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(vdpau)
 BuildRequires:	pkgconfig(wayland-client)
+BuildRequires:	pkgconfig(wayland-egl)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zvbi-0.2)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
 BuildRequires:	pkgconfig(x265)
+BuildRequires:	pkgconfig(fdk-aac)
 %endif
 BuildRequires:	wildmidi-devel
 # For Qt sink
@@ -138,7 +140,10 @@ BuildRequires:	pkgconfig(Qt5Gui)
 BuildRequires:	pkgconfig(Qt5Qml)
 BuildRequires:	pkgconfig(Qt5Quick)
 BuildRequires:	pkgconfig(Qt5X11Extras)
-
+BuildRequires:	pkgconfig(Qt5WaylandClient)
+# vulkan support
+BuildRequires:	%{_lib}vulkan-devel
+%rename gstreamer1.0-plugins-bad
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -560,7 +565,7 @@ export HAVE_CXX="yes"
 	--enable-experimental
 %endif
 
-%make
+%make CXXFLAGS+="-std=gnu++14"
 
 %install
 %makeinstall_std
@@ -581,11 +586,15 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstchromaprint.so
 %{_libdir}/gstreamer-%{api}/libgstcoloreffects.so
 %{_libdir}/gstreamer-%{api}/libgstdataurisrc.so
+%{_libdir}/gstreamer-%{api}/libgstdc1394.so
 %{_libdir}/gstreamer-%{api}/libgstdebugutilsbad.so
 %{_libdir}/gstreamer-%{api}/libgstdtls.so
 %{_libdir}/gstreamer-%{api}/libgstdvb.so
 %{_libdir}/gstreamer-%{api}/libgstdvbsuboverlay.so
 %{_libdir}/gstreamer-%{api}/libgstdvdspu.so
+%if %{build_plf}
+%{_libdir}/gstreamer-%{api}/libgstfdkaac.so
+%endif
 %{_libdir}/gstreamer-%{api}/libgstfieldanalysis.so
 %{_libdir}/gstreamer-%{api}/libgstfestival.so
 %{_libdir}/gstreamer-%{api}/libgstfluidsynthmidi.so
@@ -599,7 +608,9 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstinterlace.so
 %{_libdir}/gstreamer-%{api}/libgstjpegformat.so
 %{_libdir}/gstreamer-%{api}/libgstkate.so
+%{_libdir}/gstreamer-%{api}/libgstkmssink.so
 %{_libdir}/gstreamer-%{api}/libgstladspa.so
+%{_libdir}/gstreamer-%{api}/libgstlv2.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsmux.so
 %{_libdir}/gstreamer-%{api}/libgstmimic.so
 %{_libdir}/gstreamer-%{api}/libgstmpegpsdemux.so
@@ -608,6 +619,7 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstopenjpeg.so
 %{_libdir}/gstreamer-%{api}/libgstpcapparse.so
 %{_libdir}/gstreamer-%{api}/libgstpnm.so
+%{_libdir}/gstreamer-%{api}/libgstqmlgl.so
 %{_libdir}/gstreamer-%{api}/libgstrawparse.so
 %{_libdir}/gstreamer-%{api}/libgstremovesilence.so
 %{_libdir}/gstreamer-%{api}/libgstresindvd.so
@@ -621,6 +633,7 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstsmooth.so
 %{_libdir}/gstreamer-%{api}/libgstspeed.so
 %{_libdir}/gstreamer-%{api}/libgstsubenc.so
+%{_libdir}/gstreamer-%{api}/libgsttimecode.so
 %{_libdir}/gstreamer-%{api}/libgstbz2.so
 %{_libdir}/gstreamer-%{api}/libgstmpegpsmux.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsdemux.so
@@ -657,7 +670,6 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstnetsim.so
 %{_libdir}/gstreamer-%{api}/libgstopenal.so
 %{_libdir}/gstreamer-%{api}/libgstopusparse.so
-%{_libdir}/gstreamer-%{api}/libgstqtsink.so
 %{_libdir}/gstreamer-%{api}/libgstrfbsrc.so
 %{_libdir}/gstreamer-%{api}/libgstsmoothstreaming.so
 %{_libdir}/gstreamer-%{api}/libgstspandsp.so
@@ -785,10 +797,8 @@ export HAVE_CXX="yes"
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-player-%{api}.pc
 
-
 %files -n %{girname}
 %{_libdir}/girepository-1.0/GstGL-%{api}.typelib
 %{_libdir}/girepository-1.0/GstInsertBin-%{api}.typelib
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
 %{_libdir}/girepository-1.0/GstPlayer-%{api}.typelib
-
