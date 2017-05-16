@@ -46,6 +46,7 @@
 %define libbadvideo		%mklibname gstbadvideo %{api} %{major}
 %define libgstwayland		%mklibname gstwayland %{api} %{major}
 %define libgstplayer		%mklibname gstplayer %{api} %{major}
+%define libgstbadallocators	%mklibname gstbadallocators %{api} %{major}
 %define devname			%mklibname -d %{name} %{api}
 
 Summary:	GStreamer Streaming-media framework plug-ins
@@ -293,6 +294,13 @@ Group:		System/Libraries
 %description -n %{liburidownloader}
 This package contains the libraries for %{name}%{api}.
 
+%package -n %{libgstbadallocators}
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
+
+%description -n %{libgstbadallocators}
+This package contains the libraries for %{name}%{api}.
+
 %package -n %{devname}
 Summary:	Libraries and include files for GStreamer streaming-media framework
 Group:		Development/C
@@ -308,6 +316,7 @@ Requires:	%{libgstwayland} = %{version}-%{release}
 Requires:	%{libgstplayer} = %{version}-%{release}
 Requires:	%{libmpegts} = %{version}-%{release}
 Requires:	%{liburidownloader} = %{version}-%{release}
+Requires:	%{libgstbadallocators} = %{version}-%{release}
 Provides:	%{name}%{api}-devel = %{version}-%{release}
 
 %description -n %{devname}
@@ -450,6 +459,7 @@ This is a subtitle plugin for GStreamer based on libass.
 %files -n %{bname}-libass
 %{_libdir}/gstreamer-%{api}/libgstassrender.so
 
+%if 0
 %package -n %{bname}-opencv
 Summary:	GStreamer OpenCV Plugins
 Group:		Video
@@ -460,6 +470,7 @@ GStreamer OpenCV Plugins.
 %files -n %{bname}-opencv
 %{_libdir}/gstreamer-%{api}/libgstopencv.so
 %{_datadir}/gst-plugins-bad/%{api}/opencv_haarcascades/*.xml
+%endif
 
 %if %{build_faad}
 %package -n %{bname}-faad
@@ -582,16 +593,24 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstbayer.so
 %{_libdir}/gstreamer-%{api}/libgstbluez.so
 %{_libdir}/gstreamer-%{api}/libgstbs2b.so
-%{_libdir}/gstreamer-%{api}/libgstcamerabin2.so
+%{_libdir}/gstreamer-%{api}/libgstcamerabin.so
 %{_libdir}/gstreamer-%{api}/libgstchromaprint.so
 %{_libdir}/gstreamer-%{api}/libgstcoloreffects.so
-%{_libdir}/gstreamer-%{api}/libgstdataurisrc.so
 %{_libdir}/gstreamer-%{api}/libgstdc1394.so
 %{_libdir}/gstreamer-%{api}/libgstdebugutilsbad.so
 %{_libdir}/gstreamer-%{api}/libgstdtls.so
 %{_libdir}/gstreamer-%{api}/libgstdvb.so
 %{_libdir}/gstreamer-%{api}/libgstdvbsuboverlay.so
 %{_libdir}/gstreamer-%{api}/libgstdvdspu.so
+%{_libdir}/gstreamer-%{api}/libgstaudiobuffersplit.so
+%{_libdir}/gstreamer-%{api}/libgstaudiomixmatrix.so
+%{_libdir}/gstreamer-%{api}/libgstcamerabin.so
+%{_libdir}/gstreamer-%{api}/libgstfaceoverlay.so
+%{_libdir}/gstreamer-%{api}/libgstgtk.so
+%{_libdir}/gstreamer-%{api}/libgstkms.so
+%{_libdir}/gstreamer-%{api}/libgstlegacyrawparse.so
+%{_libdir}/gstreamer-%{api}/libgstteletext.so
+%{_libdir}/gstreamer-%{api}/libgstttmlsubs.so
 %if %{build_plf}
 %{_libdir}/gstreamer-%{api}/libgstfdkaac.so
 %endif
@@ -602,17 +621,14 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstgaudieffects.so
 %{_libdir}/gstreamer-%{api}/libgstgdp.so
 %{_libdir}/gstreamer-%{api}/libgstgeometrictransform.so
-%{_libdir}/gstreamer-%{api}/libgstgtksink.so
 %{_libdir}/gstreamer-%{api}/libgstid3tag.so
 %{_libdir}/gstreamer-%{api}/libgstinter.so
 %{_libdir}/gstreamer-%{api}/libgstinterlace.so
 %{_libdir}/gstreamer-%{api}/libgstjpegformat.so
 %{_libdir}/gstreamer-%{api}/libgstkate.so
-%{_libdir}/gstreamer-%{api}/libgstkmssink.so
 %{_libdir}/gstreamer-%{api}/libgstladspa.so
 %{_libdir}/gstreamer-%{api}/libgstlv2.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsmux.so
-%{_libdir}/gstreamer-%{api}/libgstmimic.so
 %{_libdir}/gstreamer-%{api}/libgstmpegpsdemux.so
 %{_libdir}/gstreamer-%{api}/libgstneonhttpsrc.so
 %{_libdir}/gstreamer-%{api}/libgstofa.so
@@ -620,7 +636,6 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstpcapparse.so
 %{_libdir}/gstreamer-%{api}/libgstpnm.so
 %{_libdir}/gstreamer-%{api}/libgstqmlgl.so
-%{_libdir}/gstreamer-%{api}/libgstrawparse.so
 %{_libdir}/gstreamer-%{api}/libgstremovesilence.so
 %{_libdir}/gstreamer-%{api}/libgstresindvd.so
 %{_libdir}/gstreamer-%{api}/libgstrsvg.so
@@ -674,7 +689,6 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstsmoothstreaming.so
 %{_libdir}/gstreamer-%{api}/libgstspandsp.so
 %{_libdir}/gstreamer-%{api}/libgstsrtp.so
-%{_libdir}/gstreamer-%{api}/libgstteletextdec.so
 %{_libdir}/gstreamer-%{api}/libgstvideofiltersbad.so
 %{_libdir}/gstreamer-%{api}/libgstvideoframe_audiolevel.so
 %{_libdir}/gstreamer-%{api}/libgstyadif.so
@@ -755,6 +769,9 @@ export HAVE_CXX="yes"
 %files -n %{libgstplayer}
 %{_libdir}/libgstplayer-%{api}.so.%{major}*
 
+%files -n %{libgstbadallocators}
+%{_libdir}/libgstbadallocators-%{api}.so.%{major}*
+
 %files -n %{devname}
 %doc docs/plugins/html
 %doc %{_datadir}/gtk-doc/html/
@@ -771,6 +788,7 @@ export HAVE_CXX="yes"
 %{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstplayer-%{api}.so
 %{_libdir}/libgstgl-%{api}.so
+%{_libdir}/libgstbadallocators-1.0.so
 %{_libdir}/gstreamer-%{api}/include/gst/gl
 %{_includedir}/gstreamer-%{api}/gst/audio/
 %{_includedir}/gstreamer-%{api}/gst/base/
@@ -783,6 +801,7 @@ export HAVE_CXX="yes"
 %{_includedir}/gstreamer-%{api}/gst/player
 %{_includedir}/gstreamer-%{api}/gst/uridownloader
 %{_includedir}/gstreamer-%{api}/gst/video
+%{_includedir}/gstreamer-%{api}/gst/allocators
 %{_datadir}/gir-1.0/GstGL-%{api}.gir
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_datadir}/gir-1.0/GstMpegts-%{api}.gir
@@ -796,9 +815,12 @@ export HAVE_CXX="yes"
 %{_libdir}/pkgconfig/gstreamer-insertbin-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-player-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-bad-allocators-1.0.pc
 
 %files -n %{girname}
 %{_libdir}/girepository-1.0/GstGL-%{api}.typelib
 %{_libdir}/girepository-1.0/GstInsertBin-%{api}.typelib
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
 %{_libdir}/girepository-1.0/GstPlayer-%{api}.typelib
+%{_libdir}/girepository-1.0/GstBadAllocators-%{api}.typelib
+
