@@ -1,7 +1,7 @@
-diff -p -up gst-plugins-bad-0.10.7/ext/timidity/gstwildmidi.c~ gst-plugins-bad-0.10.7/ext/timidity/gstwildmidi.c
---- gst-plugins-bad-0.10.7/ext/timidity/gstwildmidi.c~	2008-03-13 15:25:20.000000000 +0100
-+++ gst-plugins-bad-0.10.7/ext/timidity/gstwildmidi.c	2008-05-16 16:31:45.000000000 +0200
-@@ -59,7 +59,7 @@
+diff -Naur gst-plugins-bad-1.12.0/ext/wildmidi/gstwildmidi.c gst-plugins-bad-1.12.0.tpg/ext/wildmidi/gstwildmidi.c
+--- gst-plugins-bad-1.12.0/ext/wildmidi/gstwildmidi.c	2017-04-13 11:10:59.020189152 +0000
++++ gst-plugins-bad-1.12.0.tpg/ext/wildmidi/gstwildmidi.c	2017-05-16 19:48:34.338932993 +0000
+@@ -55,7 +55,7 @@
  #include "gstwildmidi.h"
  
  #ifndef WILDMIDI_CFG
