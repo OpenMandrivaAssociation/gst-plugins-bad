@@ -604,7 +604,6 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstdvdspu.so
 %{_libdir}/gstreamer-%{api}/libgstaudiobuffersplit.so
 %{_libdir}/gstreamer-%{api}/libgstaudiomixmatrix.so
-%{_libdir}/gstreamer-%{api}/libgstcamerabin.so
 %{_libdir}/gstreamer-%{api}/libgstfaceoverlay.so
 %{_libdir}/gstreamer-%{api}/libgstgtk.so
 %{_libdir}/gstreamer-%{api}/libgstkms.so
@@ -788,7 +787,7 @@ export HAVE_CXX="yes"
 %{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstplayer-%{api}.so
 %{_libdir}/libgstgl-%{api}.so
-%{_libdir}/libgstbadallocators-1.0.so
+%{_libdir}/libgstbadallocators-%{api}.so
 %{_libdir}/gstreamer-%{api}/include/gst/gl
 %{_includedir}/gstreamer-%{api}/gst/audio/
 %{_includedir}/gstreamer-%{api}/gst/base/
@@ -806,6 +805,7 @@ export HAVE_CXX="yes"
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_datadir}/gir-1.0/GstMpegts-%{api}.gir
 %{_datadir}/gir-1.0/GstPlayer-%{api}.gir
+%{_datadir}/gir-1.0/GstBadAllocators-%{api}.gir
 %{_libdir}/pkgconfig/gstreamer-bad-audio-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-bad-base-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-bad-video-%{api}.pc
@@ -823,4 +823,3 @@ export HAVE_CXX="yes"
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
 %{_libdir}/girepository-1.0/GstPlayer-%{api}.typelib
 %{_libdir}/girepository-1.0/GstBadAllocators-%{api}.typelib
-
