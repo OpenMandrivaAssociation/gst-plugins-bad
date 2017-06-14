@@ -46,6 +46,7 @@
 %define libbadvideo		%mklibname gstbadvideo %{api} %{major}
 %define libgstwayland		%mklibname gstwayland %{api} %{major}
 %define libgstplayer		%mklibname gstplayer %{api} %{major}
+%define libgstopencv		%mklibname gstopencv %{api} %{major}
 %define libgstbadallocators	%mklibname gstbadallocators %{api} %{major}
 %define devname			%mklibname -d %{name} %{api}
 
@@ -259,6 +260,13 @@ Group:          System/Libraries
 %description -n %{libgstplayer}
 This package contains the libraries for %{name}%{api}.
 
+%package -n %{libgstopencv}
+Summary:        Libraries for GStreamer OpenCV framework
+Group:          System/Libraries
+
+%description -n %{libgstopencv}
+This package contains the libraries for %{name}%{api}.
+
 %package -n %{libgl}
 Summary:	Libraries for GStreamer streaming-media framework
 Group:		System/Libraries
@@ -314,6 +322,7 @@ Requires:	%{libbadbase} = %{version}-%{release}
 Requires:	%{libbadvideo} = %{version}-%{release}
 Requires:	%{libgstwayland} = %{version}-%{release}
 Requires:	%{libgstplayer} = %{version}-%{release}
+Requires:	%{libgstopencv} = %{version}-%{release}
 Requires:	%{libmpegts} = %{version}-%{release}
 Requires:	%{liburidownloader} = %{version}-%{release}
 Requires:	%{libgstbadallocators} = %{version}-%{release}
@@ -458,19 +467,6 @@ This is a subtitle plugin for GStreamer based on libass.
 
 %files -n %{bname}-libass
 %{_libdir}/gstreamer-%{api}/libgstassrender.so
-
-%if 0
-%package -n %{bname}-opencv
-Summary:	GStreamer OpenCV Plugins
-Group:		Video
-
-%description -n %{bname}-opencv
-GStreamer OpenCV Plugins.
-
-%files -n %{bname}-opencv
-%{_libdir}/gstreamer-%{api}/libgstopencv.so
-%{_datadir}/gst-plugins-bad/%{api}/opencv_haarcascades/*.xml
-%endif
 
 %if %{build_faad}
 %package -n %{bname}-faad
@@ -768,6 +764,11 @@ export HAVE_CXX="yes"
 %files -n %{libgstplayer}
 %{_libdir}/libgstplayer-%{api}.so.%{major}*
 
+%files -n %{libgstopencv}
+%{_libdir}/libgstopencv-%{api}.so.%{major}*
+%{_libdir}/gstreamer-1.0/libgstopencv.so
+%{_datadir}/gst-plugins-bad/%{api}/opencv_haarcascades/*.xml
+
 %files -n %{libgstbadallocators}
 %{_libdir}/libgstbadallocators-%{api}.so.%{major}*
 
@@ -786,6 +787,7 @@ export HAVE_CXX="yes"
 %{_libdir}/libgstbadvideo-%{api}.so
 %{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstplayer-%{api}.so
+%{_libdir}/libgstopencv-%{api}.so
 %{_libdir}/libgstgl-%{api}.so
 %{_libdir}/libgstbadallocators-%{api}.so
 %{_libdir}/gstreamer-%{api}/include/gst/gl
@@ -801,6 +803,7 @@ export HAVE_CXX="yes"
 %{_includedir}/gstreamer-%{api}/gst/uridownloader
 %{_includedir}/gstreamer-%{api}/gst/video
 %{_includedir}/gstreamer-%{api}/gst/allocators
+%{_includedir}/gstreamer-%{api}/gst/opencv
 %{_datadir}/gir-1.0/GstGL-%{api}.gir
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_datadir}/gir-1.0/GstMpegts-%{api}.gir
