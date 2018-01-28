@@ -67,6 +67,7 @@ Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}
 Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
 # We don't ship a version of gtk3 that is built against wayland right now...
 Patch1:		gst-plugins-bad-no-gtkwayland.patch
+Patch2:		gst-plugins-bad-1.12.4-opencv-3.4.patch
 
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm => 0.90
@@ -95,9 +96,9 @@ BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gmodule-export-2.0)
 BuildRequires:	pkgconfig(gmodule-no-export-2.0)
 BuildRequires:	pkgconfig(gnutls) >= 2.11.3
-BuildRequires:	pkgconfig(gstreamer-plugins-base-%{api}) >= %{version}
-BuildRequires:	pkgconfig(gstreamer-%{api}) >= %{version}
-BuildRequires:	pkgconfig(gstreamer-video-%{api}) >= %{version}
+BuildRequires:	pkgconfig(gstreamer-plugins-base-%{api}) >= 1.12.3
+BuildRequires:	pkgconfig(gstreamer-%{api}) >= 1.12.3
+BuildRequires:	pkgconfig(gstreamer-video-%{api}) >= 1.12.3
 BuildRequires:	pkgconfig(gudev-1.0)
 BuildRequires:	pkgconfig(kate)
 BuildRequires:	pkgconfig(libass)
@@ -135,6 +136,7 @@ BuildRequires:	pkgconfig(wayland-client)
 BuildRequires:	pkgconfig(wayland-egl)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zvbi-0.2)
+BuildRequires:	libmpcdec-devel
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
@@ -360,6 +362,13 @@ mjpegtools-based encoding and decoding plug-in.
 %files -n %{bname}-mpeg2enc
 %{_libdir}/gstreamer-%{api}/libgstmpeg2enc.so
 %{_libdir}/gstreamer-%{api}/libgstmplex.so
+
+%package -n %{bname}-musepack
+Summary:	GStreamer musepack plug-in
+Group:		Video
+
+%description -n %{bname}-musepack
+musepack encoding and decoding plug-in.
 
 %if %{build_gme}
 %package -n %{bname}-gme
@@ -777,6 +786,9 @@ export HAVE_CXX="yes"
 
 %files -n %{libgstbadallocators}
 %{_libdir}/libgstbadallocators-%{api}.so.%{major}*
+
+%files -n %{bname}-musepack
+%{_libdir}/gstreamer-%{api}/libgstmusepack.so
 
 %files -n %{devname}
 %doc docs/plugins/html
