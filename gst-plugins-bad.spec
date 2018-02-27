@@ -43,17 +43,17 @@
 %define	libphotography		%mklibname gstphotography %{api} %{major}
 %define	libcodecparsers		%mklibname gstcodecparsers %{api} %{major}
 %define libmpegts		%mklibname gstmpegts %{api} %{major}
-%define libgl			%mklibname gstgl %{api} %{major}
+%define libwebrtc		%mklibname gstwebrtc %{api} %{major}
 %define liburidownloader	%mklibname gsturidownloader %{api} %{major}
 %define libinsertbin		%mklibname gstinsertbin %{api} %{major}
 %define girname			%mklibname gstreamer-plugins-bad-gir %{api}
 %define libbadaudio		%mklibname gstbadaudio %{api} %{major}
-%define libbadbase		%mklibname gstbadbase %{api} %{major}
+%define libisoff		%mklibname gstisoff %{api} %{major}
 %define libbadvideo		%mklibname gstbadvideo %{api} %{major}
 %define libgstwayland		%mklibname gstwayland %{api} %{major}
 %define libgstplayer		%mklibname gstplayer %{api} %{major}
 %define libgstopencv		%mklibname gstopencv %{api} %{major}
-%define libgstbadallocators	%mklibname gstbadallocators %{api} %{major}
+%define libwebrtc		%mklibname gstwebrtc %{api} %{major}
 %define devname			%mklibname -d %{name} %{api}
 
 Summary:	GStreamer Streaming-media framework plug-ins
@@ -64,10 +64,10 @@ License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
-Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
+#Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
 # We don't ship a version of gtk3 that is built against wayland right now...
 Patch1:		gst-plugins-bad-no-gtkwayland.patch
-Patch2:		gst-plugins-bad-1.12.4-opencv-3.4.patch
+#Patch2:		gst-plugins-bad-1.12.4-opencv-3.4.patch
 
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm => 0.90
@@ -89,7 +89,7 @@ BuildRequires:	pkgconfig(exempi-2.0)
 BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	pkgconfig(gio-2.0) >= 2.25.0
 BuildRequires:	pkgconfig(gtk+-3.0)
-BuildRequires:	pkgconfig(gl)
+#BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	pkgconfig(glib-2.0)
@@ -240,11 +240,11 @@ Group:          System/Libraries
 %description -n %{libbadaudio}
 This package contains the libraries for %{name}%{api}.
 
-%package -n %{libbadbase}
+%package -n %{libwebrtc}
 Summary:        Libraries for GStreamer streaming-media framework
 Group:          System/Libraries
 
-%description -n %{libbadbase}
+%description -n %{libwebrtc}
 This package contains the libraries for %{name}%{api}.
 
 %package -n %{libbadvideo}
@@ -275,19 +275,19 @@ Group:          System/Libraries
 %description -n %{libgstopencv}
 This package contains the libraries for %{name}%{api}.
 
-%package -n %{libgl}
-Summary:	Libraries for GStreamer streaming-media framework
+#%package -n %{libgl}
+#Summary:	Libraries for GStreamer streaming-media framework
 Group:		System/Libraries
 
-%description -n %{libgl}
-GStreamer is a streaming-media framework, based on graphs of filters which
-operate on media data. Applications using this library can do anything
-from real-time sound processing to playing videos, and just about anything
-else media-related.  Its plugin-based architecture means that new data
-types or processing capabilities can be added simply by installing new
-plugins.
+#%description -n %{libgl}
+#GStreamer is a streaming-media framework, based on graphs of filters which
+#operate on media data. Applications using this library can do anything
+#from real-time sound processing to playing videos, and just about anything
+#else media-related.  Its plugin-based architecture means that new data
+#types or processing capabilities can be added simply by installing new
+#plugins.
 
-This package contains the libraries.
+#This package contains the libraries.
 
 %package -n %{libinsertbin}
 Summary:	Libraries for GStreamer streaming-media framework
@@ -310,11 +310,11 @@ Group:		System/Libraries
 %description -n %{liburidownloader}
 This package contains the libraries for %{name}%{api}.
 
-%package -n %{libgstbadallocators}
+%package -n %{libisoff}
 Summary:	Libraries for GStreamer streaming-media framework
 Group:		System/Libraries
 
-%description -n %{libgstbadallocators}
+%description -n %{libisoff}
 This package contains the libraries for %{name}%{api}.
 
 %package -n %{devname}
@@ -324,16 +324,19 @@ Requires:	%{libadaptivedemux} = %{version}-%{release}
 Requires:	%{libbasecamerabinsrc} = %{version}-%{release}
 Requires:	%{libphotography} = %{version}-%{release}
 Requires:	%{libcodecparsers} = %{version}-%{release}
-Requires:	%{libgl} = %{EVRD}
 Requires:	%{libinsertbin} = %{version}-%{release}
-Requires:	%{libbadbase} = %{version}-%{release}
+Requires:	%{libisoff} = %{version}-%{release}
 Requires:	%{libbadvideo} = %{version}-%{release}
 Requires:	%{libgstwayland} = %{version}-%{release}
+Requires:	#{libbadaudio} = %{version}-%{release}
 Requires:	%{libgstplayer} = %{version}-%{release}
 Requires:	%{libgstopencv} = %{version}-%{release}
 Requires:	%{libmpegts} = %{version}-%{release}
 Requires:	%{liburidownloader} = %{version}-%{release}
-Requires:	%{libgstbadallocators} = %{version}-%{release}
+Requires:	%{libwebrtc} = %{version}-%{release}
+
+
+#Requires:	%{libgstbadallocators} = %{version}-%{release}
 Provides:	%{name}%{api}-devel = %{version}-%{release}
 
 %description -n %{devname}
@@ -546,7 +549,7 @@ This package is in restricted repository as it violates some patents.
 %package -n %{girname}
 Group:		System/Libraries
 Summary:	Object Introspection interface description for %{name}
-Requires:	%{libgl} = %{version}
+#Requires:	%{libgl} = %{version}
 Requires:	%{libinsertbin} = %{version}
 Requires:	%{libmpegts} = %{version}
 
@@ -561,6 +564,8 @@ GObject Introspection interface description for %{name}.
 export CC=%{__cc}
 export CXX=%{__cxx}
 export HAVE_CXX="yes"
+export CFLAGS="$CFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
+export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
 %configure \
 	--disable-static \
 	--disable-directfb \
@@ -616,7 +621,7 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstaudiobuffersplit.so
 %{_libdir}/gstreamer-%{api}/libgstaudiomixmatrix.so
 %{_libdir}/gstreamer-%{api}/libgstfaceoverlay.so
-%{_libdir}/gstreamer-%{api}/libgstgtk.so
+#%{_libdir}/gstreamer-%{api}/libgstgtk.so
 %{_libdir}/gstreamer-%{api}/libgstkms.so
 %{_libdir}/gstreamer-%{api}/libgstlegacyrawparse.so
 %{_libdir}/gstreamer-%{api}/libgstteletext.so
@@ -645,7 +650,7 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstopenjpeg.so
 %{_libdir}/gstreamer-%{api}/libgstpcapparse.so
 %{_libdir}/gstreamer-%{api}/libgstpnm.so
-%{_libdir}/gstreamer-%{api}/libgstqmlgl.so
+#%{_libdir}/gstreamer-%{api}/libgstqmlgl.so
 %{_libdir}/gstreamer-%{api}/libgstremovesilence.so
 %{_libdir}/gstreamer-%{api}/libgstresindvd.so
 %{_libdir}/gstreamer-%{api}/libgstrsvg.so
@@ -684,7 +689,7 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstaudiofxbad.so
 %{_libdir}/gstreamer-%{api}/libgstdashdemux.so
 %{_libdir}/gstreamer-%{api}/libgstdecklink.so
-%{_libdir}/gstreamer-%{api}/libgstaudiomixer.so
+%{_libdir}/gstreamer-%{api}/libgstipcpipeline.so
 %{_libdir}/gstreamer-%{api}/libgstfbdevsink.so
 %{_libdir}/gstreamer-%{api}/libgstfreeverb.so
 %{_datadir}/gstreamer-%{api}/presets/GstFreeverb.prs
@@ -709,12 +714,13 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-%{api}/libgstivfparse.so
 %{_libdir}/gstreamer-%{api}/libgstjp2kdecimator.so
 %{_libdir}/gstreamer-%{api}/libgstopenexr.so
-%{_libdir}/gstreamer-%{api}/libgstopengl.so
+%{_libdir}/gstreamer-%{api}/libgstopenglmixers.so
 %{_libdir}/gstreamer-%{api}/libgstsndfile.so
 %{_libdir}/gstreamer-%{api}/libgststereo.so
 %{_libdir}/gstreamer-%{api}/libgstvideosignal.so
 %{_libdir}/gstreamer-%{api}/libgstvmnc.so
 %{_libdir}/gstreamer-%{api}/libgstflite.so
+%{_libdir}/gstreamer-%{api}/libgstproxy.so
 %if %{build_faad}
 %files -n %{bname}-faad
 %{_libdir}/gstreamer-%{api}/libgstfaad.so
@@ -752,8 +758,8 @@ export HAVE_CXX="yes"
 %files -n %{libcodecparsers}
 %{_libdir}/libgstcodecparsers-%{api}.so.%{major}*
 
-%files -n %{libgl}
-%{_libdir}/libgstgl-%{api}.so.%{major}*
+%files -n %{libisoff}
+%{_libdir}/libgstisoff-%{api}.so.%{major}*
 
 %files -n %{libinsertbin}
 %{_libdir}/libgstinsertbin-%{api}.so.%{major}*
@@ -767,8 +773,8 @@ export HAVE_CXX="yes"
 %files -n %{libbadaudio}
 %{_libdir}/libgstbadaudio-%{api}.so.%{major}*
 
-%files -n %{libbadbase}
-%{_libdir}/libgstbadbase-%{api}.so.%{major}*
+%files -n %{libwebrtc}
+%{_libdir}/libgstwebrtc-%{api}.so.%{major}*
 
 %files -n %{libbadvideo}
 %{_libdir}/libgstbadvideo-%{api}.so.%{major}*
@@ -784,8 +790,8 @@ export HAVE_CXX="yes"
 %{_libdir}/gstreamer-1.0/libgstopencv.so
 %{_datadir}/gst-plugins-bad/%{api}/opencv_haarcascades/*.xml
 
-%files -n %{libgstbadallocators}
-%{_libdir}/libgstbadallocators-%{api}.so.%{major}*
+#%files -n %{libgstwebrtc}
+#%{_libdir}/libgstbadallocators-%{api}.so.%{major}*
 
 %files -n %{bname}-musepack
 %{_libdir}/gstreamer-%{api}/libgstmusepack.so
@@ -801,46 +807,37 @@ export HAVE_CXX="yes"
 %{_libdir}/libgstmpegts-%{api}.so
 %{_libdir}/libgsturidownloader-%{api}.so
 %{_libdir}/libgstbadaudio-%{api}.so
-%{_libdir}/libgstbadbase-%{api}.so
+%{_libdir}/libgstwebrtc-%{api}.so
 %{_libdir}/libgstbadvideo-%{api}.so
 %{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstplayer-%{api}.so
 %{_libdir}/libgstopencv-%{api}.so
-%{_libdir}/libgstgl-%{api}.so
-%{_libdir}/libgstbadallocators-%{api}.so
-%{_libdir}/gstreamer-%{api}/include/gst/gl
+%{_libdir}/libgstisoff-%{api}.so
 %{_includedir}/gstreamer-%{api}/gst/audio/
-%{_includedir}/gstreamer-%{api}/gst/base/
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/
 %{_includedir}/gstreamer-%{api}/gst/codecparsers/
-%{_includedir}/gstreamer-%{api}/gst/gl/
+%{_includedir}/gstreamer-%{api}/gst/webrtc/
 %{_includedir}/gstreamer-%{api}/gst/interfaces/photography*
 %{_includedir}/gstreamer-%{api}/gst/insertbin
 %{_includedir}/gstreamer-%{api}/gst/mpegts
 %{_includedir}/gstreamer-%{api}/gst/player
 %{_includedir}/gstreamer-%{api}/gst/uridownloader
 %{_includedir}/gstreamer-%{api}/gst/video
-%{_includedir}/gstreamer-%{api}/gst/allocators
+%{_includedir}/gstreamer-%{api}/gst/isoff
 %{_includedir}/gstreamer-%{api}/gst/opencv
-%{_datadir}/gir-1.0/GstGL-%{api}.gir
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_datadir}/gir-1.0/GstMpegts-%{api}.gir
 %{_datadir}/gir-1.0/GstPlayer-%{api}.gir
-%{_datadir}/gir-1.0/GstBadAllocators-%{api}.gir
 %{_libdir}/pkgconfig/gstreamer-bad-audio-%{api}.pc
-%{_libdir}/pkgconfig/gstreamer-bad-base-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-bad-video-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-plugins-bad-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-codecparsers-%{api}.pc
-%{_libdir}/pkgconfig/gstreamer-gl-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-webrtc-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-insertbin-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-player-%{api}.pc
-%{_libdir}/pkgconfig/gstreamer-bad-allocators-1.0.pc
 
 %files -n %{girname}
-%{_libdir}/girepository-1.0/GstGL-%{api}.typelib
 %{_libdir}/girepository-1.0/GstInsertBin-%{api}.typelib
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
 %{_libdir}/girepository-1.0/GstPlayer-%{api}.typelib
-%{_libdir}/girepository-1.0/GstBadAllocators-%{api}.typelib
