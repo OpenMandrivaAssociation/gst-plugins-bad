@@ -109,7 +109,6 @@ BuildRequires:	pkgconfig(libexif) >= 0.6.16
 BuildRequires:	pkgconfig(libmimic)
 BuildRequires:	pkgconfig(libmodplug)
 BuildRequires:	pkgconfig(libmpg123)
-BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libsrtp)
 BuildRequires:	pkgconfig(libofa) >= 0.9.3
