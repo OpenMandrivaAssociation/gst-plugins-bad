@@ -20,7 +20,7 @@
 %define build_plf	0
 ##########################
 %if "%{disttag}" == "mdk"
-%define	build_plf	1
+%define build_plf	1
 %endif
 
 %if %{build_plf}
@@ -39,9 +39,9 @@
 %define api	1.0
 %define major	0
 %define libadaptivedemux	%mklibname gstadaptivedemux %{api} %{major}
-%define	libbasecamerabinsrc	%mklibname gstbasecamerabinsrc %{api} %{major}
-%define	libphotography		%mklibname gstphotography %{api} %{major}
-%define	libcodecparsers		%mklibname gstcodecparsers %{api} %{major}
+%define libbasecamerabinsrc	%mklibname gstbasecamerabinsrc %{api} %{major}
+%define libphotography		%mklibname gstphotography %{api} %{major}
+%define libcodecparsers		%mklibname gstcodecparsers %{api} %{major}
 %define libmpegts		%mklibname gstmpegts %{api} %{major}
 %define libwebrtc		%mklibname gstwebrtc %{api} %{major}
 %define liburidownloader	%mklibname gsturidownloader %{api} %{major}
@@ -72,7 +72,7 @@ Patch1:		gst-plugins-bad-no-gtkwayland.patch
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm => 0.90
 %endif
-BuildRequires:	bzip2-devel
+BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	gettext-devel
 BuildRequires:	fonts-ttf-dejavu
 BuildRequires:	gobject-introspection-devel
@@ -277,7 +277,7 @@ This package contains the libraries for %{name}%{api}.
 
 #%package -n %{libgl}
 #Summary:	Libraries for GStreamer streaming-media framework
-Group:		System/Libraries
+#Group:		System/Libraries
 
 #%description -n %{libgl}
 #GStreamer is a streaming-media framework, based on graphs of filters which
@@ -328,7 +328,7 @@ Requires:	%{libinsertbin} = %{version}-%{release}
 Requires:	%{libisoff} = %{version}-%{release}
 Requires:	%{libbadvideo} = %{version}-%{release}
 Requires:	%{libgstwayland} = %{version}-%{release}
-Requires:	#{libbadaudio} = %{version}-%{release}
+Requires:	%{libbadaudio} = %{version}-%{release}
 Requires:	%{libgstplayer} = %{version}-%{release}
 Requires:	%{libgstopencv} = %{version}-%{release}
 Requires:	%{libmpegts} = %{version}-%{release}
