@@ -82,7 +82,7 @@ BuildRequires:	pkgconfig(libxml-2.0) >= 2.9.2
 BuildRequires:	pkgconfig(pango)
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(pangocairo)
-BuildRequires:	pkgconfig(openexr)
+BuildRequires:	pkgconfig(OpenEXR)
 BuildRequires:	pkgconfig(check)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(dvdnav) >= 4.1.2
