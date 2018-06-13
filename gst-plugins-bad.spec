@@ -75,8 +75,14 @@ BuildRequires:	fonts-ttf-dejavu
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	kernel-headers
 BuildRequires:	ladspa-devel
+BuildRequires:	flite-devel
 BuildRequires:	pkgconfig(bluez)
+BuildRequires:	pkgconfig(libbs2b) >= 3.1.0
+BuildRequires:	pkgconfig(libxml-2.0) >= 2.9.2
+BuildRequires:	pkgconfig(pango)
 BuildRequires:	pkgconfig(cairo)
+BuildRequires:	pkgconfig(pangocairo)
+BuildRequires:	pkgconfig(openexr)
 BuildRequires:	pkgconfig(check)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(dvdnav) >= 4.1.2
