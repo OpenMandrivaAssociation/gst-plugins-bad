@@ -1,12 +1,12 @@
-diff -Naur gst-plugins-bad-1.12.0/ext/wildmidi/gstwildmidi.c gst-plugins-bad-1.12.0.tpg/ext/wildmidi/gstwildmidi.c
---- gst-plugins-bad-1.12.0/ext/wildmidi/gstwildmidi.c	2017-04-13 11:10:59.020189152 +0000
-+++ gst-plugins-bad-1.12.0.tpg/ext/wildmidi/gstwildmidi.c	2017-05-16 19:48:34.338932993 +0000
-@@ -55,7 +55,7 @@
- #include "gstwildmidi.h"
+diff -p -up ./ext/timidity/gstwildmidi.c~ ./ext/timidity/gstwildmidi.c
+--- ./ext/wildmidi/gstwildmididec.c~	2008-03-13 15:25:20.000000000 +0100
++++ ./ext/wildmidi/gstwildmididec.c	2008-05-16 16:31:45.000000000 +0200
+@@ -59,7 +59,7 @@
+ #define WILDMIDI_NUM_CHANNELS 2
  
  #ifndef WILDMIDI_CFG
 -#define WILDMIDI_CFG "/etc/timidity.cfg"
 +#define WILDMIDI_CFG "/etc/timidity/timidity.cfg"
  #endif
  
- GST_DEBUG_CATEGORY_STATIC (gst_wildmidi_debug);
+ #define DEFAULT_LOG_VOLUME_SCALE     TRUE
