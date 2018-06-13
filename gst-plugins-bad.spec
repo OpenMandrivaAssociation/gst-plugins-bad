@@ -64,7 +64,7 @@ License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
-Patch0:		gst-plugins-bad-1.14.0-wildmidi-timidity.cfg.patch
+#Patch0:		gst-plugins-bad-1.14.0-wildmidi-timidity.cfg.patch
 
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm => 0.90
