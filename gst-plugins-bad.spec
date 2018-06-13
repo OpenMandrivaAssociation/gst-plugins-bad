@@ -64,10 +64,7 @@ License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
-#Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
-# We don't ship a version of gtk3 that is built against wayland right now...
-Patch1:		gst-plugins-bad-no-gtkwayland.patch
-#Patch2:		gst-plugins-bad-1.12.4-opencv-3.4.patch
+Patch0:		gst-plugins-bad-1.14.0-wildmidi-timidity.cfg.patch
 
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm => 0.90
