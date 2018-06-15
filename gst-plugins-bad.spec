@@ -401,18 +401,6 @@ Dirac encoding and decoding plug-in.
 %{_libdir}/gstreamer-%{api}/libgstdirac.so
 %endif
 
-%package -n %{bname}-schroedinger
-Summary:	GStreamer dirac plug-in based on Schroedinger
-Group:		Video
-BuildRequires:	pkgconfig(schroedinger-1.0)
-Epoch:		1
-
-%description -n %{bname}-schroedinger
-Dirac encoding and decoding plug-in based on Schroedinger.
-
-%files -n %{bname}-schroedinger
-%{_libdir}/gstreamer-%{api}/libgstschro.so
-
 %if %{build_dts}
 %package -n %{bname}-dts
 Summary:	GStreamer plug-ins for DTS audio playback
