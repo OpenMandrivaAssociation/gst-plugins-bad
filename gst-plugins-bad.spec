@@ -138,7 +138,11 @@ BuildRequires:	pkgconfig(wayland-client)
 BuildRequires:	pkgconfig(wayland-egl)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zvbi-0.2)
+BuildRequires:	pkgconfig(libva-drm)
+BuildRequires:	pkgconfig(libssh2)
 BuildRequires:	libmpcdec-devel
+BuildRequires:	pkgconfig(valgrind)
+BuildRequires:	pkgconfig(libpcap)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
