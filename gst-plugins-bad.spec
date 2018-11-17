@@ -143,6 +143,8 @@ BuildRequires:	pkgconfig(libssh2)
 BuildRequires:	libmpcdec-devel
 BuildRequires:	pkgconfig(valgrind)
 BuildRequires:	pkgconfig(libpcap)
+BuildRequires:	pkgconfig(libtiff-4)
+BuildRequires:	pkgconfig(lcms2)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
@@ -551,8 +553,7 @@ Requires:	%{libmpegts} = %{version}
 GObject Introspection interface description for %{name}.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 %build
 export CC=%{__cc}
@@ -586,10 +587,10 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	--enable-experimental
 %endif
 
-%make CXXFLAGS+="-std=gnu++14"
+%make_build CXXFLAGS+="-std=gnu++14"
 
 %install
-%makeinstall_std
+%make_install
 
 %find_lang %{name}-%{api}
 
