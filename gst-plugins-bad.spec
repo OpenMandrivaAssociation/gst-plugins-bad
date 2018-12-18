@@ -113,7 +113,7 @@ BuildRequires:	pkgconfig(libmimic)
 BuildRequires:	pkgconfig(libmodplug)
 BuildRequires:	pkgconfig(libmpg123)
 BuildRequires:	pkgconfig(libpng)
-BuildRequires:	pkgconfig(libsrtp)
+BuildRequires:	pkgconfig(libsrtp2)
 BuildRequires:	pkgconfig(libofa) >= 0.9.3
 BuildRequires:	pkgconfig(libopenjp2)
 BuildRequires:	pkgconfig(libusb-1.0)
