@@ -718,6 +718,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstflite.so
 %{_libdir}/gstreamer-%{api}/libgstproxy.so
 %{_libdir}/gstreamer-%{api}/libgstcolormanagement.so
+%{_libdir}/gstreamer-%{api}/libgstvulkan.so
 %if %{build_faad}
 %files -n %{bname}-faad
 %{_libdir}/gstreamer-%{api}/libgstfaad.so
