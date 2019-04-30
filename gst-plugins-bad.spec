@@ -58,15 +58,15 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.14.4
-Release:	2%{?extrarelsuffix}
+Version:	1.16.0
+Release:	1%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 #Patch0:		gst-plugins-bad-1.14.0-wildmidi-timidity.cfg.patch
 
-%ifarch %{ix86} x86_64
+%ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
 %endif
 BuildRequires:	pkgconfig(bzip2)
@@ -189,6 +189,8 @@ This package is in restricted repository as it violates some patents.
 %package -n %{bname}-plugins-bad
 Summary:	Sound
 Group:		System/Libraries
+Obsoletes:	%{libbadvideo} < %{EVRD}
+Obsoletes:	%{bname}-musepack < %{EVRD}
 
 %description -n %{bname}-plugins-bad
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -663,7 +665,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstmpegpsmux.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsdemux.so
 %{_libdir}/gstreamer-%{api}/libgstuvch264.so
-%{_libdir}/gstreamer-%{api}/libgstvcdsrc.so
 %{_libdir}/gstreamer-%{api}/libgstvdpau.so
 %{_libdir}/gstreamer-%{api}/libgstvideoparsersbad.so
 %{_libdir}/gstreamer-%{api}/libgstwaylandsink.so
@@ -706,13 +707,10 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %if %{build_plf}
 %{_libdir}/gstreamer-%{api}/libgstx265.so
 %endif
-%{_libdir}/gstreamer-%{api}/libgstcompositor.so
 %{_libdir}/gstreamer-%{api}/libgstivfparse.so
 %{_libdir}/gstreamer-%{api}/libgstjp2kdecimator.so
 %{_libdir}/gstreamer-%{api}/libgstopenexr.so
-%{_libdir}/gstreamer-%{api}/libgstopenglmixers.so
 %{_libdir}/gstreamer-%{api}/libgstsndfile.so
-%{_libdir}/gstreamer-%{api}/libgststereo.so
 %{_libdir}/gstreamer-%{api}/libgstvideosignal.so
 %{_libdir}/gstreamer-%{api}/libgstvmnc.so
 %{_libdir}/gstreamer-%{api}/libgstflite.so
@@ -773,9 +771,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %files -n %{libwebrtc}
 %{_libdir}/libgstwebrtc-%{api}.so.%{major}*
 
-%files -n %{libbadvideo}
-%{_libdir}/libgstbadvideo-%{api}.so.%{major}*
-
 %files -n %{libgstwayland}
 %{_libdir}/libgstwayland-%{api}.so.%{major}*
 
@@ -790,9 +785,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 #%files -n %{libgstwebrtc}
 #%{_libdir}/libgstbadallocators-%{api}.so.%{major}*
 
-%files -n %{bname}-musepack
-%{_libdir}/gstreamer-%{api}/libgstmusepack.so
-
 %files -n %{devname}
 %doc docs/plugins/html
 %doc %{_datadir}/gtk-doc/html/
@@ -805,7 +797,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgsturidownloader-%{api}.so
 %{_libdir}/libgstbadaudio-%{api}.so
 %{_libdir}/libgstwebrtc-%{api}.so
-%{_libdir}/libgstbadvideo-%{api}.so
 %{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstplayer-%{api}.so
 %{_libdir}/libgstopencv-%{api}.so
@@ -819,7 +810,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/mpegts
 %{_includedir}/gstreamer-%{api}/gst/player
 %{_includedir}/gstreamer-%{api}/gst/uridownloader
-%{_includedir}/gstreamer-%{api}/gst/video
 %{_includedir}/gstreamer-%{api}/gst/isoff
 %{_includedir}/gstreamer-%{api}/gst/opencv
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
@@ -827,7 +817,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gir-1.0/GstPlayer-%{api}.gir
 %{_datadir}/gir-1.0/GstWebRTC-%{api}.gir
 %{_libdir}/pkgconfig/gstreamer-bad-audio-%{api}.pc
-%{_libdir}/pkgconfig/gstreamer-bad-video-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-plugins-bad-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-codecparsers-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-webrtc-%{api}.pc
