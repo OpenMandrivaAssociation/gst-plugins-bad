@@ -74,7 +74,7 @@ BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	gettext-devel
 BuildRequires:	fonts-ttf-dejavu
 BuildRequires:	gobject-introspection-devel
-BuildRequires:	kernel-headers
+BuildRequires:	kernel-release-headers
 BuildRequires:	ladspa-devel
 BuildRequires:	flite-devel
 BuildRequires:	pkgconfig(bluez)
