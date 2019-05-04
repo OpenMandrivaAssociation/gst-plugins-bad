@@ -52,6 +52,7 @@
 %define libbadvideo		%mklibname gstbadvideo %{api} %{major}
 %define libgstwayland		%mklibname gstwayland %{api} %{major}
 %define libgstplayer		%mklibname gstplayer %{api} %{major}
+%define libgstsctp		%mklibname gstsctp %{api} %{major}
 %define libgstopencv		%mklibname gstopencv %{api} %{major}
 %define libwebrtc		%mklibname gstwebrtc %{api} %{major}
 %define devname			%mklibname -d %{name} %{api}
@@ -278,6 +279,13 @@ Group:          System/Libraries
 %description -n %{libgstplayer}
 This package contains the libraries for %{name}%{api}.
 
+%package -n %{libgstsctp}
+Summary:        SCTP library for GStreamer streaming-media framework
+Group:          System/Libraries
+
+%description -n %{libgstsctp}
+This package contains the SCTP library for %{name}%{api}.
+
 %package -n %{libgstopencv}
 Summary:        Libraries for GStreamer OpenCV framework
 Group:          System/Libraries
@@ -340,6 +348,7 @@ Requires:	%{libbadvideo} = %{version}-%{release}
 Requires:	%{libgstwayland} = %{version}-%{release}
 Requires:	%{libbadaudio} = %{version}-%{release}
 Requires:	%{libgstplayer} = %{version}-%{release}
+Requires:	%{libgstsctp} = %{EVRD}
 Requires:	%{libgstopencv} = %{version}-%{release}
 Requires:	%{libmpegts} = %{version}-%{release}
 Requires:	%{liburidownloader} = %{version}-%{release}
@@ -363,6 +372,16 @@ This is a HTTP plugin for GStreamer based on the curl library.
 
 %files -n %{bname}-curl
 %{_libdir}/gstreamer-%{api}/libgstcurl.so
+
+%package -n %{bname}-closedcaption
+Summary:	GStreamer Closed Caption plugin
+Group:		Networking/Other
+
+%description -n %{bname}-closedcaption
+This is a Closed Caption plugin for GStreamer
+
+%files -n %{bname}-closedcaption
+%{_libdir}/gstreamer-%{api}/libgstclosedcaption.so
 
 %package -n %{bname}-mpeg2enc
 Summary:	GStreamer mjpegtools plug-in
@@ -778,6 +797,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %files -n %{libgstplayer}
 %{_libdir}/libgstplayer-%{api}.so.%{major}*
 
+%files -n %{libgstsctp}
+%{_libdir}/libgstsctp-%{api}.so.%{major}*
+
 %files -n %{libgstopencv}
 %{_libdir}/libgstopencv-%{api}.so.%{major}*
 %{_libdir}/gstreamer-1.0/libgstopencv.so
@@ -801,6 +823,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstplayer-%{api}.so
 %{_libdir}/libgstopencv-%{api}.so
+%{_libdir}/libgstsctp-%{api}.so
 %{_libdir}/libgstisoff-%{api}.so
 %{_includedir}/gstreamer-%{api}/gst/audio/
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/
@@ -813,6 +836,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/uridownloader
 %{_includedir}/gstreamer-%{api}/gst/isoff
 %{_includedir}/gstreamer-%{api}/gst/opencv
+%{_includedir}/gstreamer-%{api}/gst/sctp
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_datadir}/gir-1.0/GstMpegts-%{api}.gir
 %{_datadir}/gir-1.0/GstPlayer-%{api}.gir
