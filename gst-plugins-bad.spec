@@ -848,6 +848,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/pkgconfig/gstreamer-insertbin-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-player-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-sctp-%{api}.pc
 
 %files -n %{girname}
 %{_libdir}/girepository-1.0/GstInsertBin-%{api}.typelib
