@@ -9,12 +9,6 @@
 %define build_dirac	0
 %define build_gme	1
 
-%ifarch aarch64
-# As of binutils 2.28-5, gold causes a compile time failure
-# linking gst_opencv
-%global ldflags %{ldflags} -fuse-ld=bfd
-%endif
-
 ##########################
 # Hardcode PLF build
 %define build_plf	0
@@ -60,7 +54,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.16.0
-Release:	2%{?extrarelsuffix}
+Release:	3%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
