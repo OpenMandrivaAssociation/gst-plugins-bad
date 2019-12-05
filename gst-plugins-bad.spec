@@ -131,6 +131,7 @@ BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(vdpau)
 BuildRequires:	pkgconfig(wayland-client)
 BuildRequires:	pkgconfig(wayland-egl)
+BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zvbi-0.2)
 BuildRequires:	pkgconfig(libva-drm)
@@ -156,7 +157,6 @@ BuildRequires:	pkgconfig(Qt5X11Extras)
 BuildRequires:	pkgconfig(Qt5WaylandClient)
 # vulkan support
 BuildRequires:	%{_lib}vulkan-devel
-BuildRequires:  pkgconfig(wayland-egl)
 BuildRequires:  egl-devel
 %rename gstreamer1.0-plugins-bad
 
