@@ -631,7 +631,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstaudiomixmatrix.so
 %{_libdir}/gstreamer-%{api}/libgstfaceoverlay.so
 #%{_libdir}/gstreamer-%{api}/libgstgtk.so
-%{_libdir}/gstreamer-%{api}/libgstkms.so
+#{_libdir}/gstreamer-%{api}/libgstkms.so
 %{_libdir}/gstreamer-%{api}/libgstlegacyrawparse.so
 %{_libdir}/gstreamer-%{api}/libgstteletext.so
 %{_libdir}/gstreamer-%{api}/libgstttmlsubs.so
@@ -679,7 +679,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstuvch264.so
 %{_libdir}/gstreamer-%{api}/libgstvdpau.so
 %{_libdir}/gstreamer-%{api}/libgstvideoparsersbad.so
-%{_libdir}/gstreamer-%{api}/libgstwaylandsink.so
+#{_libdir}/gstreamer-%{api}/libgstwaylandsink.so
 %{_libdir}/gstreamer-%{api}/libgstwebp.so
 %{_libdir}/gstreamer-%{api}/libgstwildmidi.so
 %if %{build_plf}
