@@ -156,6 +156,8 @@ BuildRequires:	pkgconfig(Qt5X11Extras)
 BuildRequires:	pkgconfig(Qt5WaylandClient)
 # vulkan support
 BuildRequires:	%{_lib}vulkan-devel
+BuildRequires:  pkgconfig(wayland-egl)
+BuildRequires:  egl-devel
 %rename gstreamer1.0-plugins-bad
 
 %description
