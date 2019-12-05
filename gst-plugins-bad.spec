@@ -599,6 +599,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	--disable-voamrwbenc \
 	--disable-voaacenc \
 %endif
+	--enable-wayland \
 %if %{build_experimental}
 	--enable-experimental
 %endif
