@@ -825,7 +825,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgsturidownloader-%{api}.so
 %{_libdir}/libgstbadaudio-%{api}.so
 %{_libdir}/libgstwebrtc-%{api}.so
-%{_libdir}/libgstwayland-%{api}.so
+#{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstplayer-%{api}.so
 %{_libdir}/libgstopencv-%{api}.so
 %{_libdir}/libgstsctp-%{api}.so
