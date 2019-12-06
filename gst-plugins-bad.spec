@@ -1,3 +1,12 @@
+#FIXME
+#For some reason as of 1.16.2 wayland package is not build. All needed Wayland br added but configure refuses to build W:
+#checking for wayland-scanner... /usr/bin/wayland-scanner
+#configure: *** checking feature: wayland sink ***
+#configure: *** for plug-ins: wayland  ***
+#checking for WAYLAND... no
+#configure: *** These plugins will not be built: wayland
+# angry
+
 %define build_experimental	0
 %define _disable_ld_no_undefined 1
 %{?_with_experimental: %{expand: %%global build_experimental 1}}
@@ -44,7 +53,7 @@
 %define libbadaudio		%mklibname gstbadaudio %{api} %{major}
 %define libisoff		%mklibname gstisoff %{api} %{major}
 %define libbadvideo		%mklibname gstbadvideo %{api} %{major}
-%define libgstwayland		%mklibname gstwayland %{api} %{major}
+#define libgstwayland		%mklibname gstwayland %{api} %{major}
 %define libgstplayer		%mklibname gstplayer %{api} %{major}
 %define libgstsctp		%mklibname gstsctp %{api} %{major}
 %define libgstopencv		%mklibname gstopencv %{api} %{major}
@@ -261,12 +270,12 @@ Group:          System/Libraries
 %description -n %{libbadvideo}
 This package contains the libraries for %{name}%{api}.
 
-%package -n %{libgstwayland}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
+#package -n %{libgstwayland}
+#Summary:        Libraries for GStreamer streaming-media framework
+#Group:          System/Libraries
 
-%description -n %{libgstwayland}
-This package contains the libraries for %{name}%{api}.
+#description -n %{libgstwayland}
+#This package contains the libraries for %{name}%{api}.
 
 %package -n %{libgstplayer}
 Summary:        Libraries for GStreamer streaming-media framework
@@ -340,7 +349,7 @@ Requires:	%{libphotography} = %{version}-%{release}
 Requires:	%{libcodecparsers} = %{version}-%{release}
 Requires:	%{libinsertbin} = %{version}-%{release}
 Requires:	%{libisoff} = %{version}-%{release}
-Requires:	%{libgstwayland} = %{version}-%{release}
+#Requires:	%{libgstwayland} = %{version}-%{release}
 Requires:	%{libbadaudio} = %{version}-%{release}
 Requires:	%{libgstplayer} = %{version}-%{release}
 Requires:	%{libgstsctp} = %{EVRD}
@@ -787,8 +796,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %files -n %{libwebrtc}
 %{_libdir}/libgstwebrtc-%{api}.so.%{major}*
 
-%files -n %{libgstwayland}
-%{_libdir}/libgstwayland-%{api}.so.%{major}*
+#files -n %{libgstwayland}
+#{_libdir}/libgstwayland-%{api}.so.%{major}*
 
 %files -n %{libgstplayer}
 %{_libdir}/libgstplayer-%{api}.so.%{major}*
