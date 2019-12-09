@@ -71,6 +71,7 @@ BuildRequires:	gobject-introspection-devel
 BuildRequires:	kernel-release-headers
 BuildRequires:	ladspa-devel
 BuildRequires:	flite-devel
+BuildRequires:	pkgconfig(aom)
 BuildRequires:	pkgconfig(bluez)
 BuildRequires:	pkgconfig(libbs2b) >= 3.1.0
 BuildRequires:	pkgconfig(libxml-2.0) >= 2.9.2
