@@ -596,7 +596,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dvoamrwbenc=disabled \
 %endif
 	-Dwayland=enabled \
-	-Dmsdk=disabled
+	-Dmsdk=disabled \
+	-Dopensles=disabled
 
 %meson_build CXXFLAGS+="-std=gnu++14"
 
