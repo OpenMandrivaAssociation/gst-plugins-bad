@@ -289,17 +289,17 @@ Group:		System/Libraries
 %description -n %{libgstopencv}
 This package contains the libraries for %{name}%{api}.
 
-%package -n %{libgl}
-Summary:	Libraries for GStreamer streaming-media framework
-Group:		System/Libraries
+#package -n %{libgl}
+#Summary:	Libraries for GStreamer streaming-media framework
+#Group:		System/Libraries
 
-%description -n %{libgl}
-GStreamer is a streaming-media framework, based on graphs of filters which
-operate on media data. Applications using this library can do anything
-from real-time sound processing to playing videos, and just about anything
-else media-related.  Its plugin-based architecture means that new data
-types or processing capabilities can be added simply by installing new
-plugins.
+#description -n %{libgl}
+#GStreamer is a streaming-media framework, based on graphs of filters which
+#operate on media data. Applications using this library can do anything
+#from real-time sound processing to playing videos, and just about anything
+#else media-related.  Its plugin-based architecture means that new data
+#types or processing capabilities can be added simply by installing new
+#plugins.
 
 #This package contains the libraries.
 
@@ -561,7 +561,7 @@ This package is in restricted repository as it violates some patents.
 %package -n %{girname}
 Group:		System/Libraries
 Summary:	Object Introspection interface description for %{name}
-Requires:	%{libgl} = %{version}
+#Requires:	%{libgl} = %{version}
 Requires:	%{libinsertbin} = %{version}
 Requires:	%{libmpegts} = %{version}
 
