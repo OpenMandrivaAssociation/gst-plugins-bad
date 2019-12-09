@@ -132,7 +132,7 @@ BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(vdpau)
 BuildRequires:	pkgconfig(wayland-client)
 BuildRequires:	pkgconfig(wayland-egl)
-BuildRequires:  pkgconfig(wayland-scanner)
+BuildRequires:	pkgconfig(wayland-scanner)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zvbi-0.2)
 BuildRequires:	pkgconfig(libva-drm)
@@ -214,8 +214,8 @@ This package is in restricted repository as it violates some patents.
 %endif
 
 %package -n %{libadaptivedemux}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
 %description -n %{libadaptivedemux}
 This package contains the libraries for %{name}%{api}.
@@ -595,7 +595,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dvoaacenc=disabled \
 	-Dvoamrwbenc=disabled \
 %endif
-	-Dwayland=enabled
+	-Dwayland=enabled \
+	-Dmsdk=disabled
 
 %meson_build CXXFLAGS+="-std=gnu++14"
 
