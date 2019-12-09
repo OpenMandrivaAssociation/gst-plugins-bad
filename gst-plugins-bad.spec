@@ -123,6 +123,7 @@ BuildRequires:	pkgconfig(opus)
 BuildRequires:	pkgconfig(orc-0.4) >= 0.4.5
 BuildRequires:	pkgconfig(librsvg-2.0) >= 2.36
 BuildRequires:	pkgconfig(librtmp)
+BuildRequires:	pkgconfig(lrdf)
 BuildRequires:	pkgconfig(sbc) >= 1.0
 BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(lilv-0)
