@@ -575,9 +575,9 @@ GObject Introspection interface description for %{name}.
 %autosetup -p1
 
 %build
-export CC=%{__cc}
-export CXX=%{__cxx}
-export HAVE_CXX="yes"
+# (tpg) fix finding libmpcdec
+sed -i -e 's#mpc/mpcdec.h#mpcdec/mpcdec.h#g' $(grep -ril 'mpc/mpcdec.h' *)
+
 export CFLAGS="$CFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
 export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
 %meson \
