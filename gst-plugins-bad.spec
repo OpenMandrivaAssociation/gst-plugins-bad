@@ -1,15 +1,4 @@
-#FIXME
-#For some reason as of 1.16.2 wayland package is not build. All needed Wayland br added but configure refuses to build W:
-#checking for wayland-scanner... /usr/bin/wayland-scanner
-#configure: *** checking feature: wayland sink ***
-#configure: *** for plug-ins: wayland  ***
-#checking for WAYLAND... no
-#configure: *** These plugins will not be built: wayland
-# angry
-
-%define build_experimental	0
 %define _disable_ld_no_undefined 1
-%{?_with_experimental: %{expand: %%global build_experimental 1}}
 %define build_amrwb	0
 %define build_faac	0
 %define build_faad	0
@@ -53,7 +42,7 @@
 %define libbadaudio		%mklibname gstbadaudio %{api} %{major}
 %define libisoff		%mklibname gstisoff %{api} %{major}
 %define libbadvideo		%mklibname gstbadvideo %{api} %{major}
-#define libgstwayland		%mklibname gstwayland %{api} %{major}
+%define libgstwayland		%mklibname gstwayland %{api} %{major}
 %define libgstplayer		%mklibname gstplayer %{api} %{major}
 %define libgstsctp		%mklibname gstsctp %{api} %{major}
 %define libgstopencv		%mklibname gstopencv %{api} %{major}
@@ -63,7 +52,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.16.2
-Release:	1%{?extrarelsuffix}
+Release:	2%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -73,6 +62,8 @@ Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
 %endif
+BuildRequires:	meson
+BuildRequires:	cmake
 BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	gettext-devel
 BuildRequires:	fonts-ttf-dejavu
@@ -96,7 +87,7 @@ BuildRequires:	pkgconfig(exempi-2.0)
 BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	pkgconfig(gio-2.0) >= 2.25.0
 BuildRequires:	pkgconfig(gtk+-3.0)
-#BuildRequires:	pkgconfig(gl)
+BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	pkgconfig(glib-2.0)
@@ -166,7 +157,7 @@ BuildRequires:	pkgconfig(Qt5X11Extras)
 BuildRequires:	pkgconfig(Qt5WaylandClient)
 # vulkan support
 BuildRequires:	%{_lib}vulkan-devel
-BuildRequires:  egl-devel
+BuildRequires:	egl-devel
 %rename gstreamer1.0-plugins-bad
 
 %description
@@ -250,65 +241,65 @@ Group:		System/Libraries
 This package contains the libraries for %{name}%{api}.
 
 %package -n %{libbadaudio}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
 %description -n %{libbadaudio}
 This package contains the libraries for %{name}%{api}.
 
 %package -n %{libwebrtc}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
 %description -n %{libwebrtc}
 This package contains the libraries for %{name}%{api}.
 
 %package -n %{libbadvideo}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
 %description -n %{libbadvideo}
 This package contains the libraries for %{name}%{api}.
 
-#package -n %{libgstwayland}
-#Summary:        Libraries for GStreamer streaming-media framework
-#Group:          System/Libraries
+%package -n %{libgstwayland}
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
-#description -n %{libgstwayland}
-#This package contains the libraries for %{name}%{api}.
+%description -n %{libgstwayland}
+This package contains the libraries for %{name}%{api}.
 
 %package -n %{libgstplayer}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
 %description -n %{libgstplayer}
 This package contains the libraries for %{name}%{api}.
 
 %package -n %{libgstsctp}
-Summary:        SCTP library for GStreamer streaming-media framework
-Group:          System/Libraries
+Summary:	SCTP library for GStreamer streaming-media framework
+Group:		System/Libraries
 
 %description -n %{libgstsctp}
 This package contains the SCTP library for %{name}%{api}.
 
 %package -n %{libgstopencv}
-Summary:        Libraries for GStreamer OpenCV framework
-Group:          System/Libraries
+Summary:	Libraries for GStreamer OpenCV framework
+Group:		System/Libraries
 
 %description -n %{libgstopencv}
 This package contains the libraries for %{name}%{api}.
 
-#%package -n %{libgl}
-#Summary:	Libraries for GStreamer streaming-media framework
-#Group:		System/Libraries
+%package -n %{libgl}
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
-#%description -n %{libgl}
-#GStreamer is a streaming-media framework, based on graphs of filters which
-#operate on media data. Applications using this library can do anything
-#from real-time sound processing to playing videos, and just about anything
-#else media-related.  Its plugin-based architecture means that new data
-#types or processing capabilities can be added simply by installing new
-#plugins.
+%description -n %{libgl}
+GStreamer is a streaming-media framework, based on graphs of filters which
+operate on media data. Applications using this library can do anything
+from real-time sound processing to playing videos, and just about anything
+else media-related.  Its plugin-based architecture means that new data
+types or processing capabilities can be added simply by installing new
+plugins.
 
 #This package contains the libraries.
 
@@ -349,7 +340,7 @@ Requires:	%{libphotography} = %{version}-%{release}
 Requires:	%{libcodecparsers} = %{version}-%{release}
 Requires:	%{libinsertbin} = %{version}-%{release}
 Requires:	%{libisoff} = %{version}-%{release}
-#Requires:	%{libgstwayland} = %{version}-%{release}
+Requires:	%{libgstwayland} = %{version}-%{release}
 Requires:	%{libbadaudio} = %{version}-%{release}
 Requires:	%{libgstplayer} = %{version}-%{release}
 Requires:	%{libgstsctp} = %{EVRD}
@@ -570,7 +561,7 @@ This package is in restricted repository as it violates some patents.
 %package -n %{girname}
 Group:		System/Libraries
 Summary:	Object Introspection interface description for %{name}
-#Requires:	%{libgl} = %{version}
+Requires:	%{libgl} = %{version}
 Requires:	%{libinsertbin} = %{version}
 Requires:	%{libmpegts} = %{version}
 
@@ -586,37 +577,32 @@ export CXX=%{__cxx}
 export HAVE_CXX="yes"
 export CFLAGS="$CFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
 export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
-%configure \
-	--disable-static \
-	--disable-directfb \
-	--with-package-name='OpenMandriva %{name} package' \
-	--with-package-origin='http://www.openmandriva.org/' \
-	--with-gtk=3.0 \
+%meson \
+	-Ddirectfb=disabled \
+	-Dpackage-name='OpenMandriva %{name} %{version}-%{release}' \
+	-Dpackage-origin='%{disturl}' \
 %if ! %{build_faac}
-	--disable-faac \
+	-Dfaac=disabled \
 %endif
 %if ! %{build_faad}
-	--disable-faad \
+	-Dfaad=disabled \
 %endif
 %if ! %{build_xvid}
 	--disable-xvid \
 %endif
 %if ! %{build_dts}
-	--disable-dts \
+	-Ddts=disabled \
 %endif
 %if ! %{build_plf}
-	--disable-voamrwbenc \
-	--disable-voaacenc \
+	-Dvoaacenc=disabled \
+	-Dvoamrwbenc=disabled \
 %endif
-	--enable-wayland \
-%if %{build_experimental}
-	--enable-experimental
-%endif
+	-Dwayland=enabled
 
-%make_build CXXFLAGS+="-std=gnu++14"
+%meson_build CXXFLAGS+="-std=gnu++14"
 
 %install
-%make_install
+%meson_install
 
 %find_lang %{name}-%{api}
 
@@ -671,7 +657,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstopenjpeg.so
 %{_libdir}/gstreamer-%{api}/libgstpcapparse.so
 %{_libdir}/gstreamer-%{api}/libgstpnm.so
-#%{_libdir}/gstreamer-%{api}/libgstqmlgl.so
+%{_libdir}/gstreamer-%{api}/libgstqmlgl.so
 %{_libdir}/gstreamer-%{api}/libgstremovesilence.so
 %{_libdir}/gstreamer-%{api}/libgstresindvd.so
 %{_libdir}/gstreamer-%{api}/libgstrsvg.so
@@ -698,9 +684,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstvoaacenc.so
 %{_libdir}/gstreamer-%{api}/libgstvoamrwbenc.so
 %{_datadir}/gstreamer-%{api}/presets/GstVoAmrwbEnc.prs
-%endif
-%if %{build_experimental}
-#%{_libdir}/gstreamer-%{api}/libgstdeinterlace2.so
 %endif
 %{_libdir}/gstreamer-%{api}/libgstmodplug.so
 %{_libdir}/gstreamer-%{api}/libgsty4mdec.so
@@ -796,8 +779,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %files -n %{libwebrtc}
 %{_libdir}/libgstwebrtc-%{api}.so.%{major}*
 
-#files -n %{libgstwayland}
-#{_libdir}/libgstwayland-%{api}.so.%{major}*
+%files -n %{libgstwayland}
+%{_libdir}/libgstwayland-%{api}.so.%{major}*
 
 %files -n %{libgstplayer}
 %{_libdir}/libgstplayer-%{api}.so.%{major}*
@@ -825,7 +808,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgsturidownloader-%{api}.so
 %{_libdir}/libgstbadaudio-%{api}.so
 %{_libdir}/libgstwebrtc-%{api}.so
-#{_libdir}/libgstwayland-%{api}.so
+%{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstplayer-%{api}.so
 %{_libdir}/libgstopencv-%{api}.so
 %{_libdir}/libgstsctp-%{api}.so
