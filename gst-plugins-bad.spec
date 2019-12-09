@@ -587,9 +587,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %if ! %{build_faad}
 	-Dfaad=disabled \
 %endif
-%if ! %{build_xvid}
-	--disable-xvid \
-%endif
 %if ! %{build_dts}
 	-Ddts=disabled \
 %endif
