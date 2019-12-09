@@ -585,6 +585,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dpackage-origin='%{disturl}' \
 %if ! %{build_faac}
 	-Dfaac=disabled \
+	-Dfdkaac=disabled \
 %endif
 %if ! %{build_faad}
 	-Dfaad=disabled \
