@@ -597,6 +597,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %if ! %{build_plf}
 	-Dvoaacenc=disabled \
 	-Dvoamrwbenc=disabled \
+	-Dlibde265=disabled \
 %endif
 	-Dwayland=enabled \
 	-Dmsdk=disabled \
