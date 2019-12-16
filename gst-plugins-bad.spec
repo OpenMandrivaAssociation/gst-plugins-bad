@@ -121,6 +121,7 @@ BuildRequires:	pkgconfig(openal)
 BuildRequires:	pkgconfig(opencv)
 BuildRequires:	pkgconfig(opus)
 BuildRequires:	pkgconfig(orc-0.4) >= 0.4.5
+BuildRequires:	pkgconfig(openh264)
 BuildRequires:	pkgconfig(librsvg-2.0) >= 2.36
 BuildRequires:	pkgconfig(librtmp)
 BuildRequires:	pkgconfig(lrdf)
