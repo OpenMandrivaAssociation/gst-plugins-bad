@@ -139,7 +139,6 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zvbi-0.2)
 BuildRequires:	pkgconfig(libva-drm)
 BuildRequires:	pkgconfig(libssh2)
-BuildRequires:	libmpcdec-devel
 BuildRequires:	pkgconfig(valgrind)
 BuildRequires:	pkgconfig(libpcap)
 BuildRequires:	pkgconfig(libtiff-4)
@@ -606,7 +605,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dwasapi=disabled \
 	-Dnvdec=disabled \
 	-Dnvenc=disabled \
-	-Diqa=disabled
+	-Diqa=disabled \
+	-Dmusepack=disabled
 
 %meson_build CXXFLAGS+="-std=gnu++14"
 
