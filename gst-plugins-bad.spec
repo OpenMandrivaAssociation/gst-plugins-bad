@@ -125,6 +125,7 @@ BuildRequires:	pkgconfig(openh264)
 BuildRequires:	pkgconfig(librsvg-2.0) >= 2.36
 BuildRequires:	pkgconfig(librtmp)
 BuildRequires:	pkgconfig(lrdf)
+BuildRequires:	pkgconfig(raptor)
 BuildRequires:	pkgconfig(sbc) >= 1.0
 BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(lilv-0)
