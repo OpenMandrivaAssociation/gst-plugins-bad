@@ -144,6 +144,8 @@ BuildRequires:	pkgconfig(valgrind)
 BuildRequires:	pkgconfig(libpcap)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(lcms2)
+BuildRequires:	pkgconfig(nice)
+BuildRequires:	pkgconfig(webrtc-audio-processing)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
@@ -527,6 +529,14 @@ Plug-ins for encoding AAC audio
 This package is in restricted repository as it violates some patents.
 %endif
 
+%package -n %{bname}-wayland
+Summary:	GStreamer plugin for Wayland support
+Group:		Sound
+Requires:	%{bname}-plugins-base
+
+%description -n %{bname}-wayland
+GStreamer plugin for Wayland support
+
 %package -n %{bname}-gsm
 Summary:	GStreamer plugin for GSM lossy audio format
 Group:		Sound
@@ -579,7 +589,7 @@ GObject Introspection interface description for %{name}.
 sed -i -e 's#mpc/mpcdec.h#mpcdec/mpcdec.h#g' $(grep -ril 'mpc/mpcdec.h' *)
 
 export CFLAGS="$CFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
-export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
+export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register -std=gnu++17 -Wno-dynamic-exception-spec -Wno-register"
 %meson \
 	-Ddirectfb=disabled \
 	-Dpackage-name='OpenMandriva %{name} %{version}-%{release}' \
@@ -598,6 +608,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dvoaacenc=disabled \
 	-Dvoamrwbenc=disabled \
 	-Dlibde265=disabled \
+	-Dx265=disabled \
 %endif
 	-Dwayland=enabled \
 	-Dmsdk=disabled \
@@ -609,9 +620,13 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Diqa=disabled \
 	-Dmusepack=disabled \
 	-Dopenmpt=disabled \
-	-Dopenni2=disabled
+	-Dopenni2=disabled \
+	-Dsctp=disabled \
+	-Dsrt=disabled \
+	-Dwpe=disabled \
+	-Dzbar=disabled
 
-%meson_build CXXFLAGS+="-std=gnu++14"
+%meson_build
 
 %install
 %meson_install
@@ -620,6 +635,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 
 %files -n %{bname}-plugins-bad -f %{name}-%{api}.lang
 %doc AUTHORS COPYING README NEWS
+%{_bindir}/playout
 %{_libdir}/gstreamer-%{api}/libgstadpcmdec.so
 %{_libdir}/gstreamer-%{api}/libgstadpcmenc.so
 %{_libdir}/gstreamer-%{api}/libgstasfmux.so
@@ -669,7 +685,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstopenjpeg.so
 %{_libdir}/gstreamer-%{api}/libgstpcapparse.so
 %{_libdir}/gstreamer-%{api}/libgstpnm.so
-%{_libdir}/gstreamer-%{api}/libgstqmlgl.so
 %{_libdir}/gstreamer-%{api}/libgstremovesilence.so
 %{_libdir}/gstreamer-%{api}/libgstresindvd.so
 %{_libdir}/gstreamer-%{api}/libgstrsvg.so
@@ -736,6 +751,15 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstproxy.so
 %{_libdir}/gstreamer-%{api}/libgstcolormanagement.so
 %{_libdir}/gstreamer-%{api}/libgstvulkan.so
+%{_libdir}/gstreamer-1.0/libgstaom.so
+%{_libdir}/gstreamer-1.0/libgstkms.so
+%{_libdir}/gstreamer-1.0/libgstopenh264.so
+%{_libdir}/gstreamer-1.0/libgstwebrtc.so
+%{_libdir}/gstreamer-1.0/libgstwebrtcdsp.so
+
+%files -n %{bname}-wayland
+%{_libdir}/gstreamer-1.0/libgstwaylandsink.so
+
 %if %{build_faad}
 %files -n %{bname}-faad
 %{_libdir}/gstreamer-%{api}/libgstfaad.so
@@ -803,14 +827,12 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %files -n %{libgstopencv}
 %{_libdir}/libgstopencv-%{api}.so.%{major}*
 %{_libdir}/gstreamer-1.0/libgstopencv.so
-%{_datadir}/gst-plugins-bad/%{api}/opencv_haarcascades/*.xml
 
 #%files -n %{libgstwebrtc}
 #%{_libdir}/libgstbadallocators-%{api}.so.%{major}*
 
 %files -n %{devname}
 %doc docs/plugins/html
-%doc %{_datadir}/gtk-doc/html/
 %{_libdir}/libgstadaptivedemux-%{api}.so
 %{_libdir}/libgstbasecamerabinsrc-%{api}.so
 %{_libdir}/libgstcodecparsers-%{api}.so
