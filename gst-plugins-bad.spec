@@ -58,6 +58,7 @@ Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 #Patch0:		gst-plugins-bad-1.14.0-wildmidi-timidity.cfg.patch
+Patch1:		gst-force-opencv-4.3-and-fix-build-with-vulkan-sdk-140.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
@@ -147,6 +148,7 @@ BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(nice)
 BuildRequires:	pkgconfig(webrtc-audio-processing)
+BuildRequires:  pkgconfig(ffnvcodec)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
