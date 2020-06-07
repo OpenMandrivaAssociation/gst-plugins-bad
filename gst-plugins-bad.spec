@@ -148,6 +148,7 @@ BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(nice)
 BuildRequires:	pkgconfig(webrtc-audio-processing)
+BuildRequires:  pkgconfig(ffnvcodec)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
