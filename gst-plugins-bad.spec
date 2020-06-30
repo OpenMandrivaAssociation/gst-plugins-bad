@@ -1,3 +1,6 @@
+# Doesn't work for whatever reason
+%global debug_package %{nil}
+
 %define _disable_ld_no_undefined 1
 %define build_amrwb	0
 %define build_faac	0
