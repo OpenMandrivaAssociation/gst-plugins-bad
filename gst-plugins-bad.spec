@@ -52,13 +52,14 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.16.2
-Release:	6%{?extrarelsuffix}
+Release:	7%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 #Patch0:		gst-plugins-bad-1.14.0-wildmidi-timidity.cfg.patch
 Patch1:		gst-force-opencv-4.3-and-fix-build-with-vulkan-sdk-140.patch
+Patch2:		gst-plugins-bad-neon-0.31.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
