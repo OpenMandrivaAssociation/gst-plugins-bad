@@ -151,6 +151,7 @@ BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(nice)
 BuildRequires:	pkgconfig(webrtc-audio-processing)
 BuildRequires:  pkgconfig(ffnvcodec)
+BuildRequires:	typelib(GstApp)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
