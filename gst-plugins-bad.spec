@@ -54,13 +54,14 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.18.0
+Version:	1.18.1
 Release:	1%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 #Patch0:		gst-plugins-bad-1.14.0-wildmidi-timidity.cfg.patch
+Patch0:		gst-plugins-bad-opencv-4.5.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
@@ -781,7 +782,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstva.so
 %{_libdir}/libgstcodecs-%{api}.so
 %{_libdir}/libgstcodecs-%{api}.so.0
-%{_libdir}/libgstcodecs-%{api}.so.0.1800.0
+%{_libdir}/libgstcodecs-%{api}.so.0.1801.0
 %{_libdir}/libgsttranscoder-%{api}.so
 %{_libdir}/libgsttranscoder-%{api}.so.0
 %{_datadir}/gstreamer-%{api}/encoding-profiles
