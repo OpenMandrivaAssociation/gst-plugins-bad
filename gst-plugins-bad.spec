@@ -54,7 +54,7 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.18.1
+Version:	1.18.2
 Release:	1%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
@@ -150,7 +150,7 @@ BuildRequires:	pkgconfig(libpcap)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(nice)
-BuildRequires:	pkgconfig(webrtc-audio-processing)
+BuildRequires:	pkgconfig(webrtc-audio-processing-1)
 BuildRequires:  pkgconfig(ffnvcodec)
 BuildRequires:	typelib(GstApp)
 %if %{build_plf}
