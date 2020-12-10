@@ -782,7 +782,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstva.so
 %{_libdir}/libgstcodecs-%{api}.so
 %{_libdir}/libgstcodecs-%{api}.so.0
-%{_libdir}/libgstcodecs-%{api}.so.0.1801.0
+#{_libdir}/libgstcodecs-%{api}.so.0.1801.0
 %{_libdir}/libgsttranscoder-%{api}.so
 %{_libdir}/libgsttranscoder-%{api}.so.0
 %{_datadir}/gstreamer-%{api}/encoding-profiles
