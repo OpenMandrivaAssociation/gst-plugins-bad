@@ -881,11 +881,10 @@ index b237cfb55d..2bf2e5da76 100644
  
    if (g_once_init_enter (&_init)) {
      GST_DEBUG_CATEGORY_INIT (GST_CAT_IO_SURFACE_VULKAN_MEMORY,
-diff --git a/sys/bluez/gstavdtpsrc.h b/sys/bluez/gstavdtpsrc.h
-index 34a2697f20..57e26493fa 100644
---- a/sys/bluez/gstavdtpsrc.h
-+++ b/sys/bluez/gstavdtpsrc.h
-@@ -59,7 +59,7 @@ struct _GstAvdtpSrc
+diff -uraN gst-plugins-bad-1.18.4/sys/bluez/gstavdtpsrc.h omv-gst-plugins-bad-1.18.4/sys/bluez/gstavdtpsrc.h
+--- gst-plugins-bad-1.18.4/sys/bluez/gstavdtpsrc.h	2021-03-15 18:49:19.750838800 +0100
++++ omv-gst-plugins-bad-1.18.4/sys/bluez/gstavdtpsrc.h	2021-04-04 19:57:42.829782741 +0200
+@@ -59,7 +59,7 @@
  
    GstPoll *poll;
    GstPollFD pfd;
@@ -893,7 +892,7 @@ index 34a2697f20..57e26493fa 100644
 +  gint unlocked;
  
    GstClockTime duration;
-   
+ 
 diff --git a/sys/d3d11/gstd3d11window.cpp b/sys/d3d11/gstd3d11window.cpp
 index cf7479f70e..537c7c2815 100644
 --- a/sys/d3d11/gstd3d11window.cpp
@@ -933,28 +932,6 @@ index 9176f49624..3dde66004b 100644
  
    if (g_once_init_enter (&once)) {
      GST_DEBUG_CATEGORY_INIT (gst_ipc_pipeline_comm_debug, "ipcpipelinecomm", 0,
-diff --git a/sys/mediafoundation/gstmftransform.cpp b/sys/mediafoundation/gstmftransform.cpp
-index 10b0c2f5ae..08ee58927f 100644
---- a/sys/mediafoundation/gstmftransform.cpp
-+++ b/sys/mediafoundation/gstmftransform.cpp
-@@ -54,7 +54,7 @@ gboolean
- gst_mf_transform_load_library (void)
- {
- #if GST_MF_HAVE_D3D11
--  static volatile gsize _init = 0;
-+  static gsize _init = 0;
-   if (g_once_init_enter (&_init)) {
-     mf_plat_module = g_module_open ("mfplat.dll", G_MODULE_BIND_LAZY);
- 
-@@ -247,7 +247,7 @@ private:
-   }
- 
- private:
--  volatile ULONG ref_count_;
-+  ULONG ref_count_;
-   ComPtr<IMFMediaEventGenerator> gen_;
-   GstMFTransformAsyncCallbackOnEvent event_cb_;
-   GWeakRef client_;
 diff --git a/sys/msdk/gstmsdkcontextutil.c b/sys/msdk/gstmsdkcontextutil.c
 index 6f5c7e41d7..0cd24eb4ba 100644
 --- a/sys/msdk/gstmsdkcontextutil.c
@@ -1003,17 +980,16 @@ index 052590209c..6d33bc484e 100644
  
    if (g_once_init_enter (&once_init)) {
      gint i;
-diff --git a/sys/nvcodec/gstnvbaseenc.h b/sys/nvcodec/gstnvbaseenc.h
-index 26e240b7b7..743db78cda 100644
---- a/sys/nvcodec/gstnvbaseenc.h
-+++ b/sys/nvcodec/gstnvbaseenc.h
-@@ -119,7 +119,7 @@ typedef struct {
+diff -uraN gst-plugins-bad-1.18.4/sys/nvcodec/gstnvbaseenc.h omv-gst-plugins-bad-1.18.4/sys/nvcodec/gstnvbaseenc.h
+--- gst-plugins-bad-1.18.4/sys/nvcodec/gstnvbaseenc.h	2021-03-15 18:49:19.774837500 +0100
++++ omv-gst-plugins-bad-1.18.4/sys/nvcodec/gstnvbaseenc.h	2021-04-04 20:01:15.667565177 +0200
+@@ -111,7 +111,7 @@
    GValue        * input_formats;                  /* OBJECT LOCK */
  
    GstVideoCodecState *input_state;
 -  volatile gint       reconfig;                   /* ATOMIC */
-+  gint                reconfig;                   /* ATOMIC */
-   GstNvEncMemType     mem_type;
++  gint       reconfig;                   /* ATOMIC */
+   gboolean            gl_input;
  
    /* array of allocated input/output buffers (GstNvEncFrameState),
 diff --git a/sys/opensles/openslescommon.c b/sys/opensles/openslescommon.c
@@ -1038,11 +1014,18 @@ index 7dc4bb81f8..72cfc9d5da 100644
  
    if (g_once_init_enter ((gsize *) & id)) {
      GType _id;
-diff --git a/sys/va/gstvaallocator.c b/sys/va/gstvaallocator.c
-index 6138e2e7a0..b1136fe4af 100644
---- a/sys/va/gstvaallocator.c
-+++ b/sys/va/gstvaallocator.c
-@@ -38,7 +38,7 @@ static void
+diff -uraN gst-plugins-bad-1.18.4/sys/va/gstvaallocator.c omv-gst-plugins-bad-1.18.4/sys/va/gstvaallocator.c
+--- gst-plugins-bad-1.18.4/sys/va/gstvaallocator.c	2021-03-15 18:49:19.782837200 +0100
++++ omv-gst-plugins-bad-1.18.4/sys/va/gstvaallocator.c	2021-04-04 20:03:14.836512614 +0200
+@@ -56,14 +56,14 @@
+ {
+   GstVideoInfo info;
+   VASurfaceID surface;
+-  volatile gint ref_count;
++  gint ref_count;
+ };
+ 
+ static void
  _init_debug_category (void)
  {
  #ifndef GST_DISABLE_GST_DEBUG
@@ -1051,18 +1034,7 @@ index 6138e2e7a0..b1136fe4af 100644
  
    if (g_once_init_enter (&_init)) {
      GST_DEBUG_CATEGORY_INIT (gst_va_memory_debug, "vamemory", 0, "VA memory");
-@@ -342,8 +342,8 @@ struct _GstVaBufferSurface
-   VASurfaceID surface;
-   guint n_mems;
-   GstMemory *mems[GST_VIDEO_MAX_PLANES];
--  volatile gint ref_count;
--  volatile gint ref_mems_count;
-+  gint ref_count;
-+  gint ref_mems_count;
- };
- 
- static void
-@@ -1029,7 +1029,7 @@ struct _GstVaMemory
+@@ -573,7 +573,7 @@
    gpointer mapped_data;
  
    GstMapFlags prev_mapflags;
@@ -1071,6 +1043,7 @@ index 6138e2e7a0..b1136fe4af 100644
  
    gboolean is_derived;
    gboolean is_dirty;
+
 diff --git a/sys/va/gstvautils.c b/sys/va/gstvautils.c
 index 36068fb0af..6014f321a1 100644
 --- a/sys/va/gstvautils.c
