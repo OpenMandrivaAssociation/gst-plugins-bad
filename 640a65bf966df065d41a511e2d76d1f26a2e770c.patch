@@ -276,41 +276,6 @@ index 4b9a71bacb..bce5c67d69 100644
    static const gchar *tags[] = { "memory", NULL };      /* don't know what to set here */
  
    if (g_once_init_enter (&type)) {
-diff --git a/gst-libs/gst/d3d11/gstd3d11device.c b/gst-libs/gst/d3d11/gstd3d11device.c
-index fd40ead5ef..94f9667100 100644
---- a/gst-libs/gst/d3d11/gstd3d11device.c
-+++ b/gst-libs/gst/d3d11/gstd3d11device.c
-@@ -150,7 +150,7 @@ static void gst_d3d11_device_finalize (GObject * object);
- static gboolean
- gst_d3d11_device_enable_d3d11_debug (void)
- {
--  static volatile gsize _init = 0;
-+  static gsize _init = 0;
- 
-   /* If all below libraries are unavailable, d3d11 device would fail with
-    * D3D11_CREATE_DEVICE_DEBUG flag */
-@@ -245,7 +245,7 @@ gst_d3d11_device_d3d11_debug (GstD3D11Device * device,
- static gboolean
- gst_d3d11_device_enable_dxgi_debug (void)
- {
--  static volatile gsize _init = 0;
-+  static gsize _init = 0;
-   gboolean ret = FALSE;
- 
-   /* If all below libraries are unavailable, d3d11 device would fail with
-diff --git a/gst-libs/gst/d3d11/gstd3d11utils.c b/gst-libs/gst/d3d11/gstd3d11utils.c
-index f188d54838..2680b65fe4 100644
---- a/gst-libs/gst/d3d11/gstd3d11utils.c
-+++ b/gst-libs/gst/d3d11/gstd3d11utils.c
-@@ -54,7 +54,7 @@ ensure_debug_category (void)
- static void
- _init_context_debug (void)
- {
--  static volatile gsize _init = 0;
-+  static gsize _init = 0;
- 
-   if (g_once_init_enter (&_init)) {
-     GST_DEBUG_CATEGORY_GET (GST_CAT_CONTEXT, "GST_CONTEXT");
 diff --git a/gst-libs/gst/sctp/sctpreceivemeta.c b/gst-libs/gst/sctp/sctpreceivemeta.c
 index e1c77d4660..11def65238 100644
 --- a/gst-libs/gst/sctp/sctpreceivemeta.c
@@ -928,33 +893,7 @@ index 34a2697f20..57e26493fa 100644
 +  gint unlocked;
  
    GstClockTime duration;
- 
-diff --git a/sys/d3d11/gstd3d11deinterlace.cpp b/sys/d3d11/gstd3d11deinterlace.cpp
-index 7c1ddd0e91..2ddd490682 100644
---- a/sys/d3d11/gstd3d11deinterlace.cpp
-+++ b/sys/d3d11/gstd3d11deinterlace.cpp
-@@ -126,7 +126,7 @@ typedef enum
- static GType
- gst_d3d11_deinterlace_method_type (void)
- {
--  static volatile gsize method_type = 0;
-+  static gsize method_type = 0;
- 
-   if (g_once_init_enter (&method_type)) {
-     static const GFlagsValue method_types[] = {
-diff --git a/sys/d3d11/gstd3d11shader.cpp b/sys/d3d11/gstd3d11shader.cpp
-index 9b7e4cf0d4..8596b6a9bd 100644
---- a/sys/d3d11/gstd3d11shader.cpp
-+++ b/sys/d3d11/gstd3d11shader.cpp
-@@ -43,7 +43,7 @@ static pD3DCompile GstD3DCompileFunc = NULL;
- gboolean
- gst_d3d11_shader_init (void)
- {
--  static volatile gsize _init = 0;
-+  static gsize _init = 0;
- 
-   if (g_once_init_enter (&_init)) {
- #if GST_D3D11_WINAPI_ONLY_APP
+   
 diff --git a/sys/d3d11/gstd3d11window.cpp b/sys/d3d11/gstd3d11window.cpp
 index cf7479f70e..537c7c2815 100644
 --- a/sys/d3d11/gstd3d11window.cpp
@@ -1016,26 +955,6 @@ index 10b0c2f5ae..08ee58927f 100644
    ComPtr<IMFMediaEventGenerator> gen_;
    GstMFTransformAsyncCallbackOnEvent event_cb_;
    GWeakRef client_;
-diff --git a/sys/mediafoundation/gstmfvideobuffer.h b/sys/mediafoundation/gstmfvideobuffer.h
-index a12b12a84c..2dc422206a 100644
---- a/sys/mediafoundation/gstmfvideobuffer.h
-+++ b/sys/mediafoundation/gstmfvideobuffer.h
-@@ -100,7 +100,7 @@ private:
-                              DWORD length);
- 
- private:
--  volatile ULONG ref_count_;
-+  ULONG ref_count_;
-   DWORD current_len_;
-   DWORD contiguous_len_;
-   BYTE *data_;
-@@ -116,4 +116,4 @@ private:
-   GDestroyNotify notify_;
- };
- 
--#endif /* __GST_MF_VIDEO_BUFFER_H__ */
-\ No newline at end of file
-+#endif /* __GST_MF_VIDEO_BUFFER_H__ */
 diff --git a/sys/msdk/gstmsdkcontextutil.c b/sys/msdk/gstmsdkcontextutil.c
 index 6f5c7e41d7..0cd24eb4ba 100644
 --- a/sys/msdk/gstmsdkcontextutil.c
@@ -1062,19 +981,6 @@ index ff1b350c98..8a85d5d2e0 100644
    GstCudaContext *context = GST_CUDA_CONTEXT (object);
    GstCudaContextPrivate *priv = context->priv;
    CUcontext cuda_ctx, old_ctx;
-diff --git a/sys/nvcodec/gstcudanvrtc.c b/sys/nvcodec/gstcudanvrtc.c
-index 39c15be7eb..381c698708 100644
---- a/sys/nvcodec/gstcudanvrtc.c
-+++ b/sys/nvcodec/gstcudanvrtc.c
-@@ -29,7 +29,7 @@ GST_DEBUG_CATEGORY_STATIC (gst_cuda_nvrtc_debug);
- static void
- _init_debug (void)
- {
--  static volatile gsize once_init = 0;
-+  static gsize once_init = 0;
- 
-   if (g_once_init_enter (&once_init)) {
- 
 diff --git a/sys/nvcodec/gstcudautils.c b/sys/nvcodec/gstcudautils.c
 index 052590209c..6d33bc484e 100644
 --- a/sys/nvcodec/gstcudautils.c
