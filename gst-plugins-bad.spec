@@ -1,7 +1,6 @@
-# Doesn't work for whatever reason
-%global debug_package %{nil}
-
 %define _disable_ld_no_undefined 1
+# Workaround for debugsource package being empty
+%define _empty_manifest_terminate_build 0
 %define build_amrwb	0
 %define build_faac	0
 %define build_faad	0
@@ -49,6 +48,7 @@
 %define libgstplayer		%mklibname gstplayer %{api} %{major}
 %define libgstsctp		%mklibname gstsctp %{api} %{major}
 %define libgstopencv		%mklibname gstopencv %{api} %{major}
+%define libgstvulkan		%mklibname gstvulkan %{api} %{major}
 %define libwebrtc		%mklibname gstwebrtc %{api} %{major}
 %define devname			%mklibname -d %{name} %{api}
 
@@ -68,6 +68,7 @@ BuildRequires:	nasm => 0.90
 %endif
 BuildRequires:	meson
 BuildRequires:	cmake
+BuildRequires:	glslc
 BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	gettext-devel
 BuildRequires:	fonts-ttf-dejavu
@@ -300,6 +301,13 @@ Summary:	Libraries for GStreamer OpenCV framework
 Group:		System/Libraries
 
 %description -n %{libgstopencv}
+This package contains the libraries for %{name}%{api}.
+
+%package -n %{libgstvulkan}
+Summary:	Libraries for GStreamer Vulkan framework
+Group:		System/Libraries
+
+%description -n %{libgstvulkan}
 This package contains the libraries for %{name}%{api}.
 
 #package -n %{libgl}
@@ -595,11 +603,10 @@ GObject Introspection interface description for %{name}.
 # (tpg) fix finding libmpcdec
 sed -i -e 's#mpc/mpcdec.h#mpcdec/mpcdec.h#g' $(grep -ril 'mpc/mpcdec.h' *)
 
-# FIXME switch vulkan to enabled once we have glslc and friends
 export CFLAGS="$CFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
 export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register -std=gnu++17 -Wno-dynamic-exception-spec -Wno-register"
 %meson \
-	-Dvulkan=disabled \
+	-Dvulkan=enabled \
 	-Dmagicleap=disabled \
 	-Dwasapi=disabled \
 	-Dwasapi2=disabled \
@@ -780,6 +787,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgsttranscode.so
 %{_libdir}/gstreamer-%{api}/libgstv4l2codecs.so
 %{_libdir}/gstreamer-%{api}/libgstva.so
+%{_libdir}/gstreamer-%{api}/libgstvulkan.so
 %{_libdir}/libgstcodecs-%{api}.so
 %{_libdir}/libgstcodecs-%{api}.so.0*
 %{_libdir}/libgsttranscoder-%{api}.so
@@ -860,6 +868,10 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 #%files -n %{libgstwebrtc}
 #%{_libdir}/libgstbadallocators-%{api}.so.%{major}*
 
+%files -n %{libgstvulkan}
+%{_libdir}/libgstvulkan-1.0.so.0
+%{_libdir}/libgstvulkan-1.0.so.0.1804.0
+
 %files -n %{devname}
 %{_libdir}/libgstadaptivedemux-%{api}.so
 %{_libdir}/libgstbasecamerabinsrc-%{api}.so
@@ -875,6 +887,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgstopencv-%{api}.so
 %{_libdir}/libgstsctp-%{api}.so
 %{_libdir}/libgstisoff-%{api}.so
+%{_libdir}/libgstvulkan-%{api}.so
 %{_includedir}/gstreamer-%{api}/gst/audio/
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/
 %{_includedir}/gstreamer-%{api}/gst/codecparsers/
@@ -888,6 +901,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/opencv
 %{_includedir}/gstreamer-%{api}/gst/sctp
 %{_includedir}/gstreamer-%{api}/gst/transcoder
+%{_includedir}/gstreamer-%{api}/gst/vulkan
 %{_libdir}/pkgconfig/gstreamer-bad-audio-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-plugins-bad-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-codecparsers-%{api}.pc
@@ -898,6 +912,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/pkgconfig/gstreamer-sctp-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-photography-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-transcoder-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-vulkan-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-vulkan-wayland-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-vulkan-xcb-%{api}.pc
 
 %files -n %{girname}
 %{_libdir}/girepository-1.0/GstInsertBin-%{api}.typelib
@@ -914,3 +931,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gir-1.0/GstCodecs-1.0.gir
 %{_libdir}/girepository-1.0/GstTranscoder-1.0.typelib
 %{_datadir}/gir-1.0/GstTranscoder-1.0.gir
+%{_libdir}/girepository-1.0/GstVulkan-1.0.typelib
+%{_datadir}/gir-1.0/GstVulkan-1.0.gir
+%{_libdir}/girepository-1.0/GstVulkanWayland-1.0.typelib
+%{_datadir}/gir-1.0/GstVulkanWayland-1.0.gir
+%{_libdir}/girepository-1.0/GstVulkanXCB-1.0.typelib
+%{_datadir}/gir-1.0/GstVulkanXCB-1.0.gir
