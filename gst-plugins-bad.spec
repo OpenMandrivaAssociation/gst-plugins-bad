@@ -69,6 +69,7 @@ BuildRequires:	nasm => 0.90
 BuildRequires:	meson
 BuildRequires:	cmake
 BuildRequires:	glslc
+BuildRequires:	pkgconfig(xkbcommon-x11)
 BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	gettext-devel
 BuildRequires:	fonts-ttf-dejavu
