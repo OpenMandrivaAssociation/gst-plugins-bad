@@ -61,6 +61,9 @@ Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 
+# Pending MR for support webrtc-audio-processing-1
+Patch0:		https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/merge_requests/2341.patch
+
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
 %endif
@@ -157,7 +160,6 @@ BuildRequires:	pkgconfig(webrtc-audio-processing-1)
 BuildRequires:	pkgconfig(ffnvcodec)
 BuildRequires:	pkgconfig(libopenaptx)
 BuildRequires:	pkgconfig(libqrencode)
-# BuildRequires:	pkgconfig(webrtc-audio-coding-1) does not support 1.0 yet
 BuildRequires:	typelib(GstApp)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
@@ -656,9 +658,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dsrt=disabled \
 	-Dwpe=disabled \
 	-Donnx=disabled \
-	-Dzbar=disabled \
-	-Dwebrtc=disabled \
-	-Dwebrtcdsp=disabled
+	-Dzbar=disabled
 
 %meson_build
 
