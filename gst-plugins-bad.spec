@@ -621,6 +621,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Ddirectfb=disabled \
 	-Ddoc=disabled \
 	-Dgs=disabled \
+	-Dtests=disabled \
 	-Dpackage-name='OpenMandriva %{name} %{version}-%{release}' \
 	-Dpackage-origin='%{disturl}' \
 %if ! %{build_faac}
