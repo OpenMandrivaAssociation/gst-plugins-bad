@@ -889,7 +889,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 
 %files -n %{libgstvulkan}
 %{_libdir}/libgstvulkan-1.0.so.0
-%{_libdir}/libgstvulkan-1.0.so.0.1804.0
+%{_libdir}/libgstvulkan-1.0.so.0.*
 
 %files -n %{devname}
 %{_libdir}/libgstadaptivedemux-%{api}.so
