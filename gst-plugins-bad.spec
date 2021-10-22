@@ -155,6 +155,9 @@ BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(nice)
 BuildRequires:	pkgconfig(webrtc-audio-processing-1)
 BuildRequires:	pkgconfig(ffnvcodec)
+BuildRequires:	pkgconfig(libopenaptx)
+BuildRequires:	pkgconfig(libqrencode)
+# BuildRequires:	pkgconfig(webrtc-audio-coding-1) does not support 1.0 yet
 BuildRequires:	typelib(GstApp)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
@@ -651,7 +654,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dsrt=disabled \
 	-Dwpe=disabled \
 	-Donnx=disabled \
-	-Dzbar=disabled
+	-Dzbar=disabled \
+	-Dwebrtc=disabled \
+	-Dwebrtcdsp=disabled
 
 %meson_build
 
