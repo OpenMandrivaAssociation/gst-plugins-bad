@@ -8,6 +8,7 @@
 %define build_dts	0
 %define build_dirac	0
 %define build_gme	1
+%define build_opencv	0
 
 ##########################
 # Hardcode PLF build
@@ -302,12 +303,14 @@ Group:		System/Libraries
 %description -n %{libgstsctp}
 This package contains the SCTP library for %{name}%{api}.
 
+%if %{build_opencv}
 %package -n %{libgstopencv}
 Summary:	Libraries for GStreamer OpenCV framework
 Group:		System/Libraries
 
 %description -n %{libgstopencv}
 This package contains the libraries for %{name}%{api}.
+%endif
 
 %package -n %{libgstvulkan}
 Summary:	Libraries for GStreamer Vulkan framework
@@ -371,7 +374,9 @@ Requires:	%{libgstwayland} = %{version}-%{release}
 Requires:	%{libbadaudio} = %{version}-%{release}
 Requires:	%{libgstplayer} = %{version}-%{release}
 Requires:	%{libgstsctp} = %{EVRD}
+%if %{build_opencv}
 Requires:	%{libgstopencv} = %{version}-%{release}
+%endif
 Requires:	%{libmpegts} = %{version}-%{release}
 Requires:	%{liburidownloader} = %{version}-%{release}
 Requires:	%{libwebrtc} = %{version}-%{release}
@@ -624,7 +629,10 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Ddoc=disabled \
 	-Dgs=disabled \
 	-Dtests=disabled \
+%endif
+%if ! %{build_opencv}
 	-Dopencv=disabled \
+%endif
 	-Dpackage-name='OpenMandriva %{name} %{version}-%{release}' \
 	-Dpackage-origin='%{disturl}' \
 %if ! %{build_faac}
@@ -871,9 +879,11 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %files -n %{libgstsctp}
 %{_libdir}/libgstsctp-%{api}.so.%{major}*
 
+%if %{build_opencv}
 %files -n %{libgstopencv}
 %{_libdir}/libgstopencv-%{api}.so.%{major}*
 %{_libdir}/gstreamer-1.0/libgstopencv.so
+%endif
 
 #%files -n %{libgstwebrtc}
 #%{_libdir}/libgstbadallocators-%{api}.so.%{major}*
@@ -894,7 +904,10 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgstwebrtc-%{api}.so
 %{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstplayer-%{api}.so
+%if %{build_opencv}
 %{_libdir}/libgstopencv-%{api}.so
+%{_includedir}/gstreamer-%{api}/gst/opencv
+%endif
 %{_libdir}/libgstsctp-%{api}.so
 %{_libdir}/libgstisoff-%{api}.so
 %{_libdir}/libgstvulkan-%{api}.so
@@ -908,7 +921,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/player
 %{_includedir}/gstreamer-%{api}/gst/uridownloader
 %{_includedir}/gstreamer-%{api}/gst/isoff
-%{_includedir}/gstreamer-%{api}/gst/opencv
 %{_includedir}/gstreamer-%{api}/gst/sctp
 %{_includedir}/gstreamer-%{api}/gst/transcoder
 %{_includedir}/gstreamer-%{api}/gst/vulkan
