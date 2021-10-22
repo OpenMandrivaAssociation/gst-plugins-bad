@@ -106,6 +106,8 @@ BuildRequires:	pkgconfig(gstreamer-%{api}) >= 1.12.3
 BuildRequires:	pkgconfig(gstreamer-video-%{api}) >= 1.12.3
 BuildRequires:	pkgconfig(gudev-1.0)
 BuildRequires:	pkgconfig(kate)
+BuildRequires:	pkgconfig(ldacBT-abr)
+BuildRequires:	pkgconfig(ldacBT-enc)
 BuildRequires:	pkgconfig(libass)
 BuildRequires:	pkgconfig(libchromaprint)
 BuildRequires:	pkgconfig(libcrypto)
@@ -648,6 +650,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dsctp=disabled \
 	-Dsrt=disabled \
 	-Dwpe=disabled \
+	-Donnx=disabled \
 	-Dzbar=disabled
 
 %meson_build
