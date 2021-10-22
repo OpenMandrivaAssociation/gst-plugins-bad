@@ -8,7 +8,7 @@
 %define build_dts	0
 %define build_dirac	0
 %define build_gme	1
-%define build_opencv	0
+%define build_opencv	1
 
 ##########################
 # Hardcode PLF build
@@ -64,6 +64,8 @@ Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}
 
 # Pending MR for support webrtc-audio-processing-1
 Patch0:		https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/merge_requests/2341.patch
+
+Patch1:		test.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
