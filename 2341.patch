@@ -1,4 +1,4 @@
-From b78c71f64934d4ebfc98286c472d4588e1eabc88 Mon Sep 17 00:00:00 2001
+From 2bc00b3ff949314d8ad2a41687b6a482283bf3e5 Mon Sep 17 00:00:00 2001
 From: Arun Raghavan <arun@asymptotic.io>
 Date: Wed, 2 Dec 2020 18:31:44 -0500
 Subject: [PATCH] webrtcdsp: Update code for webrtc-audio-processing-1
@@ -18,14 +18,14 @@ for related enums which are now gone):
 
 Part-of: <https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/merge_requests/1850>
 ---
- ext/webrtcdsp/gstwebrtcdsp.cpp       | 261 ++++++++++-----------------
+ ext/webrtcdsp/gstwebrtcdsp.cpp       | 271 ++++++++++-----------------
  ext/webrtcdsp/gstwebrtcechoprobe.cpp |  87 +++++----
  ext/webrtcdsp/gstwebrtcechoprobe.h   |   9 +-
  ext/webrtcdsp/meson.build            |   2 +-
- 4 files changed, 158 insertions(+), 201 deletions(-)
+ 4 files changed, 163 insertions(+), 206 deletions(-)
 
 diff --git a/ext/webrtcdsp/gstwebrtcdsp.cpp b/ext/webrtcdsp/gstwebrtcdsp.cpp
-index 87de1bcfc2..7c66e0d12a 100644
+index 7ee09488fb..c9a7cdae2f 100644
 --- a/ext/webrtcdsp/gstwebrtcdsp.cpp
 +++ b/ext/webrtcdsp/gstwebrtcdsp.cpp
 @@ -71,9 +71,7 @@
@@ -183,8 +183,8 @@ index 87de1bcfc2..7c66e0d12a 100644
 -  webrtc::VoiceDetection::Likelihood voice_detection_likelihood;
  };
  
- G_DEFINE_TYPE (GstWebrtcDsp, gst_webrtc_dsp, GST_TYPE_AUDIO_FILTER);
-@@ -372,9 +364,9 @@ gst_webrtc_dsp_analyze_reverse_stream (GstWebrtcDsp * self,
+ G_DEFINE_TYPE_WITH_CODE (GstWebrtcDsp, gst_webrtc_dsp, GST_TYPE_AUDIO_FILTER,
+@@ -376,9 +368,9 @@ gst_webrtc_dsp_analyze_reverse_stream (GstWebrtcDsp * self,
      GstClockTime rec_time)
  {
    GstWebrtcEchoProbe *probe = NULL;
@@ -196,7 +196,7 @@ index 87de1bcfc2..7c66e0d12a 100644
    GstFlowReturn ret = GST_FLOW_OK;
    gint err, delay;
  
-@@ -387,48 +379,44 @@ gst_webrtc_dsp_analyze_reverse_stream (GstWebrtcDsp * self,
+@@ -391,48 +383,44 @@ gst_webrtc_dsp_analyze_reverse_stream (GstWebrtcDsp * self,
    if (!probe)
      return GST_FLOW_OK;
  
@@ -260,7 +260,25 @@ index 87de1bcfc2..7c66e0d12a 100644
  
  done:
    gst_object_unref (probe);
-@@ -465,6 +453,7 @@ gst_webrtc_dsp_process_stream (GstWebrtcDsp * self,
+@@ -443,16 +431,14 @@ done:
+ 
+ static void
+ gst_webrtc_vad_post_activity (GstWebrtcDsp *self, GstBuffer *buffer,
+-    gboolean stream_has_voice)
++    gboolean stream_has_voice, guint8 level)
+ {
+   GstClockTime timestamp = GST_BUFFER_PTS (buffer);
+   GstBaseTransform *trans = GST_BASE_TRANSFORM_CAST (self);
+   GstStructure *s;
+   GstClockTime stream_time;
+   GstAudioLevelMeta *meta;
+-  guint8 level;
+ 
+-  level = self->apm->level_estimator ()->RMS ();
+   meta = gst_buffer_get_audio_level_meta (buffer);
+   if (meta) {
+     meta->voice_activity = stream_has_voice;
+@@ -481,6 +467,7 @@ gst_webrtc_dsp_process_stream (GstWebrtcDsp * self,
  {
    GstAudioBuffer abuf;
    webrtc::AudioProcessing * apm = self->apm;
@@ -268,7 +286,7 @@ index 87de1bcfc2..7c66e0d12a 100644
    gint err;
  
    if (!gst_audio_buffer_map (&abuf, &self->info, buffer,
-@@ -474,19 +463,10 @@ gst_webrtc_dsp_process_stream (GstWebrtcDsp * self,
+@@ -490,19 +477,10 @@ gst_webrtc_dsp_process_stream (GstWebrtcDsp * self,
    }
  
    if (self->interleaved) {
@@ -290,17 +308,23 @@ index 87de1bcfc2..7c66e0d12a 100644
      err = apm->ProcessStream (data, config, config, data);
    }
  
-@@ -495,7 +475,8 @@ gst_webrtc_dsp_process_stream (GstWebrtcDsp * self,
+@@ -511,10 +489,13 @@ gst_webrtc_dsp_process_stream (GstWebrtcDsp * self,
          webrtc_error_to_string (err));
    } else {
      if (self->voice_detection) {
 -      gboolean stream_has_voice = apm->voice_detection ()->stream_has_voice ();
 +      webrtc::AudioProcessingStats stats = apm->GetStatistics ();
 +      gboolean stream_has_voice = stats.voice_detected && *stats.voice_detected;
++      // The meta takes the value as -dbov, so we negate
++      guint8 level = stats.output_rms_dbfs ? (guint8) -(*stats.output_rms_dbfs) : 127;
  
        if (stream_has_voice != self->stream_has_voice)
-         gst_webrtc_vad_post_message (self, GST_BUFFER_PTS (buffer), stream_has_voice);
-@@ -567,21 +548,9 @@ static gboolean
+-        gst_webrtc_vad_post_activity (self, buffer, stream_has_voice);
++        gst_webrtc_vad_post_activity (self, buffer, stream_has_voice, level);
+ 
+       self->stream_has_voice = stream_has_voice;
+     }
+@@ -583,21 +564,9 @@ static gboolean
  gst_webrtc_dsp_start (GstBaseTransform * btrans)
  {
    GstWebrtcDsp *self = GST_WEBRTC_DSP (btrans);
@@ -322,7 +346,7 @@ index 87de1bcfc2..7c66e0d12a 100644
    if (self->echo_cancel) {
      self->probe = gst_webrtc_acquire_echo_probe (self->probe_name);
  
-@@ -602,10 +571,8 @@ static gboolean
+@@ -618,10 +587,8 @@ static gboolean
  gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
  {
    GstWebrtcDsp *self = GST_WEBRTC_DSP (filter);
@@ -334,7 +358,7 @@ index 87de1bcfc2..7c66e0d12a 100644
  
    GST_LOG_OBJECT (self, "setting format to %s with %i Hz and %i channels",
        info->finfo->description, info->rate, info->channels);
-@@ -617,7 +584,7 @@ gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
+@@ -633,7 +600,7 @@ gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
  
    self->info = *info;
    self->interleaved = (info->layout == GST_AUDIO_LAYOUT_INTERLEAVED);
@@ -343,7 +367,7 @@ index 87de1bcfc2..7c66e0d12a 100644
  
    if (!self->interleaved)
      gst_planar_audio_adapter_configure (self->padapter, info);
-@@ -626,8 +593,7 @@ gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
+@@ -642,8 +609,7 @@ gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
    self->period_samples = info->rate / 100;
    self->period_size = self->period_samples * info->bpf;
  
@@ -353,7 +377,7 @@ index 87de1bcfc2..7c66e0d12a 100644
      goto period_too_big;
  
    if (self->probe) {
-@@ -642,40 +608,31 @@ gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
+@@ -658,40 +624,31 @@ gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
      GST_WEBRTC_ECHO_PROBE_UNLOCK (self->probe);
    }
  
@@ -408,7 +432,7 @@ index 87de1bcfc2..7c66e0d12a 100644
    }
  
    if (self->gain_control) {
-@@ -690,29 +647,16 @@ gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
+@@ -706,30 +663,17 @@ gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
  
      g_type_class_unref (mode_class);
  
@@ -421,6 +445,7 @@ index 87de1bcfc2..7c66e0d12a 100644
 +    config.gain_controller1.target_level_dbfs = self->target_level_dbfs;
 +    config.gain_controller1.compression_gain_db = self->compression_gain_db;
 +    config.gain_controller1.enable_limiter = self->limiter;
++    config.level_estimation.enabled = true;
    }
  
 -  if (self->voice_detection) {
@@ -440,12 +465,13 @@ index 87de1bcfc2..7c66e0d12a 100644
 -    apm->voice_detection ()->set_likelihood (self->voice_detection_likelihood);
 -    apm->voice_detection ()->set_frame_size_ms (
 -        self->voice_detection_frame_size_ms);
+-    apm->level_estimator ()->Enable (true);
 -  }
 +  self->apm->ApplyConfig (config);
  
    GST_OBJECT_UNLOCK (self);
  
-@@ -721,9 +665,9 @@ gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
+@@ -738,9 +682,9 @@ gst_webrtc_dsp_setup (GstAudioFilter * filter, const GstAudioInfo * info)
  period_too_big:
    GST_OBJECT_UNLOCK (self);
    GST_WARNING_OBJECT (self, "webrtcdsp format produce too big period "
@@ -457,7 +483,7 @@ index 87de1bcfc2..7c66e0d12a 100644
    return FALSE;
  
  probe_has_wrong_rate:
-@@ -734,14 +678,6 @@ probe_has_wrong_rate:
+@@ -751,14 +695,6 @@ probe_has_wrong_rate:
            " use a caps filter to ensure those are the same.",
            probe_info.rate, info->rate), (NULL));
    return FALSE;
@@ -472,7 +498,7 @@ index 87de1bcfc2..7c66e0d12a 100644
  }
  
  static gboolean
-@@ -786,8 +722,6 @@ gst_webrtc_dsp_set_property (GObject * object,
+@@ -803,8 +739,6 @@ gst_webrtc_dsp_set_property (GObject * object,
        self->echo_cancel = g_value_get_boolean (value);
        break;
      case PROP_ECHO_SUPPRESSION_LEVEL:
@@ -481,7 +507,7 @@ index 87de1bcfc2..7c66e0d12a 100644
        break;
      case PROP_NOISE_SUPPRESSION:
        self->noise_suppression = g_value_get_boolean (value);
-@@ -800,13 +734,10 @@ gst_webrtc_dsp_set_property (GObject * object,
+@@ -817,13 +751,10 @@ gst_webrtc_dsp_set_property (GObject * object,
        self->gain_control = g_value_get_boolean (value);
        break;
      case PROP_EXPERIMENTAL_AGC:
@@ -495,7 +521,7 @@ index 87de1bcfc2..7c66e0d12a 100644
        break;
      case PROP_TARGET_LEVEL_DBFS:
        self->target_level_dbfs = g_value_get_int (value);
-@@ -828,11 +759,8 @@ gst_webrtc_dsp_set_property (GObject * object,
+@@ -845,11 +776,8 @@ gst_webrtc_dsp_set_property (GObject * object,
        self->voice_detection = g_value_get_boolean (value);
        break;
      case PROP_VOICE_DETECTION_FRAME_SIZE_MS:
@@ -507,7 +533,7 @@ index 87de1bcfc2..7c66e0d12a 100644
        break;
      default:
        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-@@ -859,7 +787,7 @@ gst_webrtc_dsp_get_property (GObject * object,
+@@ -876,7 +804,7 @@ gst_webrtc_dsp_get_property (GObject * object,
        g_value_set_boolean (value, self->echo_cancel);
        break;
      case PROP_ECHO_SUPPRESSION_LEVEL:
@@ -516,7 +542,7 @@ index 87de1bcfc2..7c66e0d12a 100644
        break;
      case PROP_NOISE_SUPPRESSION:
        g_value_set_boolean (value, self->noise_suppression);
-@@ -871,13 +799,13 @@ gst_webrtc_dsp_get_property (GObject * object,
+@@ -888,13 +816,13 @@ gst_webrtc_dsp_get_property (GObject * object,
        g_value_set_boolean (value, self->gain_control);
        break;
      case PROP_EXPERIMENTAL_AGC:
@@ -533,7 +559,7 @@ index 87de1bcfc2..7c66e0d12a 100644
        break;
      case PROP_TARGET_LEVEL_DBFS:
        g_value_set_int (value, self->target_level_dbfs);
-@@ -898,10 +826,10 @@ gst_webrtc_dsp_get_property (GObject * object,
+@@ -915,10 +843,10 @@ gst_webrtc_dsp_get_property (GObject * object,
        g_value_set_boolean (value, self->voice_detection);
        break;
      case PROP_VOICE_DETECTION_FRAME_SIZE_MS:
@@ -546,7 +572,7 @@ index 87de1bcfc2..7c66e0d12a 100644
        break;
      default:
        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-@@ -988,13 +916,13 @@ gst_webrtc_dsp_class_init (GstWebrtcDspClass * klass)
+@@ -1005,13 +933,13 @@ gst_webrtc_dsp_class_init (GstWebrtcDspClass * klass)
  
    g_object_class_install_property (gobject_class,
        PROP_ECHO_SUPPRESSION_LEVEL,
@@ -564,7 +590,7 @@ index 87de1bcfc2..7c66e0d12a 100644
  
    g_object_class_install_property (gobject_class,
        PROP_NOISE_SUPPRESSION,
-@@ -1009,7 +937,7 @@ gst_webrtc_dsp_class_init (GstWebrtcDspClass * klass)
+@@ -1026,7 +954,7 @@ gst_webrtc_dsp_class_init (GstWebrtcDspClass * klass)
            "Controls the aggressiveness of the suppression. Increasing the "
            "level will reduce the noise level at the expense of a higher "
            "speech distortion.", GST_TYPE_WEBRTC_NOISE_SUPPRESSION_LEVEL,
@@ -573,7 +599,7 @@ index 87de1bcfc2..7c66e0d12a 100644
            (GParamFlags) (G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS |
                G_PARAM_CONSTRUCT)));
  
-@@ -1022,24 +950,26 @@ gst_webrtc_dsp_class_init (GstWebrtcDspClass * klass)
+@@ -1039,24 +967,26 @@ gst_webrtc_dsp_class_init (GstWebrtcDspClass * klass)
  
    g_object_class_install_property (gobject_class,
        PROP_EXPERIMENTAL_AGC,
@@ -605,7 +631,7 @@ index 87de1bcfc2..7c66e0d12a 100644
  
    g_object_class_install_property (gobject_class,
        PROP_TARGET_LEVEL_DBFS,
-@@ -1094,24 +1024,23 @@ gst_webrtc_dsp_class_init (GstWebrtcDspClass * klass)
+@@ -1111,24 +1041,23 @@ gst_webrtc_dsp_class_init (GstWebrtcDspClass * klass)
    g_object_class_install_property (gobject_class,
        PROP_VOICE_DETECTION_FRAME_SIZE_MS,
        g_param_spec_int ("voice-detection-frame-size-ms",
@@ -636,7 +662,7 @@ index 87de1bcfc2..7c66e0d12a 100644
    gst_type_mark_as_plugin_api (GST_TYPE_WEBRTC_GAIN_CONTROL_MODE, (GstPluginAPIFlags) 0);
    gst_type_mark_as_plugin_api (GST_TYPE_WEBRTC_NOISE_SUPPRESSION_LEVEL, (GstPluginAPIFlags) 0);
 diff --git a/ext/webrtcdsp/gstwebrtcechoprobe.cpp b/ext/webrtcdsp/gstwebrtcechoprobe.cpp
-index cfa5b55b2f..7eac0aa8ea 100644
+index acdb3d8a7d..8e8ca064c4 100644
 --- a/ext/webrtcdsp/gstwebrtcechoprobe.cpp
 +++ b/ext/webrtcdsp/gstwebrtcechoprobe.cpp
 @@ -33,7 +33,8 @@
@@ -649,7 +675,7 @@ index cfa5b55b2f..7eac0aa8ea 100644
  #include <gst/audio/audio.h>
  
  GST_DEBUG_CATEGORY_EXTERN (webrtc_dsp_debug);
-@@ -100,7 +101,7 @@ gst_webrtc_echo_probe_setup (GstAudioFilter * filter, const GstAudioInfo * info)
+@@ -102,7 +103,7 @@ gst_webrtc_echo_probe_setup (GstAudioFilter * filter, const GstAudioInfo * info)
    self->period_size = self->period_samples * info->bpf;
  
    if (self->interleaved &&
@@ -658,7 +684,7 @@ index cfa5b55b2f..7eac0aa8ea 100644
      goto period_too_big;
  
    GST_WEBRTC_ECHO_PROBE_UNLOCK (self);
-@@ -110,9 +111,9 @@ gst_webrtc_echo_probe_setup (GstAudioFilter * filter, const GstAudioInfo * info)
+@@ -112,9 +113,9 @@ gst_webrtc_echo_probe_setup (GstAudioFilter * filter, const GstAudioInfo * info)
  period_too_big:
    GST_WEBRTC_ECHO_PROBE_UNLOCK (self);
    GST_WARNING_OBJECT (self, "webrtcdsp format produce too big period "
@@ -670,7 +696,7 @@ index cfa5b55b2f..7eac0aa8ea 100644
    return FALSE;
  }
  
-@@ -301,18 +302,20 @@ gst_webrtc_release_echo_probe (GstWebrtcEchoProbe * probe)
+@@ -303,18 +304,20 @@ gst_webrtc_release_echo_probe (GstWebrtcEchoProbe * probe)
  
  gint
  gst_webrtc_echo_probe_read (GstWebrtcEchoProbe * self, GstClockTime rec_time,
@@ -695,7 +721,7 @@ index cfa5b55b2f..7eac0aa8ea 100644
  
    if (self->interleaved)
      avail = gst_adapter_available (self->adapter) / self->info.bpf;
-@@ -322,7 +325,7 @@ gst_webrtc_echo_probe_read (GstWebrtcEchoProbe * self, GstClockTime rec_time,
+@@ -324,7 +327,7 @@ gst_webrtc_echo_probe_read (GstWebrtcEchoProbe * self, GstClockTime rec_time,
    /* In delay agnostic mode, just return 10ms of data */
    if (!GST_CLOCK_TIME_IS_VALID (rec_time)) {
      if (avail < self->period_samples)
@@ -704,7 +730,7 @@ index cfa5b55b2f..7eac0aa8ea 100644
  
      size = self->period_samples;
      skip = 0;
-@@ -369,23 +372,51 @@ gst_webrtc_echo_probe_read (GstWebrtcEchoProbe * self, GstClockTime rec_time,
+@@ -371,23 +374,51 @@ gst_webrtc_echo_probe_read (GstWebrtcEchoProbe * self, GstClockTime rec_time,
    size = MIN (avail - offset, self->period_samples - skip);
  
  copy:
@@ -770,7 +796,7 @@ index cfa5b55b2f..7eac0aa8ea 100644
        gst_planar_audio_adapter_flush (self->padapter, offset);
  
        /* we need to fill silence at the beginning and/or the end of each
-@@ -428,23 +459,13 @@ copy:
+@@ -430,23 +461,13 @@ copy:
          ret = gst_planar_audio_adapter_take_buffer (self->padapter, size,
            GST_MAP_READWRITE);
        }
@@ -795,7 +821,7 @@ index cfa5b55b2f..7eac0aa8ea 100644
  
    return delay;
 diff --git a/ext/webrtcdsp/gstwebrtcechoprobe.h b/ext/webrtcdsp/gstwebrtcechoprobe.h
-index 29f0eb4caf..8bd049962f 100644
+index 36fd34f179..488c0e958f 100644
 --- a/ext/webrtcdsp/gstwebrtcechoprobe.h
 +++ b/ext/webrtcdsp/gstwebrtcechoprobe.h
 @@ -45,6 +45,12 @@ G_BEGIN_DECLS
@@ -819,7 +845,7 @@ index 29f0eb4caf..8bd049962f 100644
  
    GstSegment segment;
    GstAdapter *adapter;
-@@ -90,7 +97,7 @@ GType gst_webrtc_echo_probe_get_type (void);
+@@ -92,7 +99,7 @@ GST_ELEMENT_REGISTER_DECLARE (webrtcechoprobe);
  GstWebrtcEchoProbe *gst_webrtc_acquire_echo_probe (const gchar * name);
  void gst_webrtc_release_echo_probe (GstWebrtcEchoProbe * probe);
  gint gst_webrtc_echo_probe_read (GstWebrtcEchoProbe * self,
@@ -829,11 +855,11 @@ index 29f0eb4caf..8bd049962f 100644
  G_END_DECLS
  #endif /* __GST_WEBRTC_ECHO_PROBE_H__ */
 diff --git a/ext/webrtcdsp/meson.build b/ext/webrtcdsp/meson.build
-index 45c020fc33..7f51eb6488 100644
+index c42cc9091a..e9346290e5 100644
 --- a/ext/webrtcdsp/meson.build
 +++ b/ext/webrtcdsp/meson.build
-@@ -3,7 +3,7 @@ webrtc_sources = [
-   'gstwebrtcechoprobe.cpp'
+@@ -4,7 +4,7 @@ webrtc_sources = [
+   'gstwebrtcdspplugin.cpp'
  ]
  
 -webrtc_dep = dependency('webrtc-audio-processing', version : ['>= 0.2', '< 0.4'],
