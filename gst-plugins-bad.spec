@@ -655,8 +655,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dopensles=disabled \
 	-Dtinyalsa=disabled \
 	-Dwasapi=disabled \
-	-Dnvdec=disabled \
-	-Dnvenc=disabled \
 	-Diqa=disabled \
 	-Dmusepack=disabled \
 	-Dopenmpt=disabled \
@@ -665,7 +663,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dsrt=disabled \
 	-Dwpe=disabled \
 	-Donnx=disabled \
-	-Dzbar=disabled
+	-Dzbar=disabled \
+	--buildtype=release
 
 %meson_build
 
@@ -680,6 +679,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_bindir}/gst-transcoder-%{api}
 %{_libdir}/gstreamer-%{api}/libgstadpcmdec.so
 %{_libdir}/gstreamer-%{api}/libgstadpcmenc.so
+%{_libdir}/gstreamer-%{api}/libgstaes.so
 %{_libdir}/gstreamer-%{api}/libgstasfmux.so
 %{_libdir}/gstreamer-%{api}/libgstaudiovisualizers.so
 %{_libdir}/gstreamer-%{api}/libgstautoconvert.so
@@ -688,6 +688,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstbs2b.so
 %{_libdir}/gstreamer-%{api}/libgstcamerabin.so
 %{_libdir}/gstreamer-%{api}/libgstchromaprint.so
+%{_libdir}/gstreamer-%{api}/libgstcodecalpha.so
 %{_libdir}/gstreamer-%{api}/libgstcoloreffects.so
 %{_libdir}/gstreamer-%{api}/libgstdc1394.so
 %{_libdir}/gstreamer-%{api}/libgstdebugutilsbad.so
@@ -703,6 +704,10 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstlegacyrawparse.so
 %{_libdir}/gstreamer-%{api}/libgstteletext.so
 %{_libdir}/gstreamer-%{api}/libgstttmlsubs.so
+%{_libdir}/gstreamer-%{api}/libgstisac.so
+%{_libdir}/gstreamer-%{api}/libgstldac.so
+%{_libdir}/gstreamer-%{api}/libgstopenaptx.so
+%{_libdir}/gstreamer-%{api}/libgstqroverlay.so
 %if %{build_plf}
 %{_libdir}/gstreamer-%{api}/libgstfdkaac.so
 %endif
@@ -807,6 +812,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstvulkan.so
 %{_libdir}/libgstcodecs-%{api}.so
 %{_libdir}/libgstcodecs-%{api}.so.0*
+%{_libdir}/libgstplay-1.0.so*
+%{_libdir}/libgstva-1.0.so*
 %{_libdir}/libgsttranscoder-%{api}.so
 %{_libdir}/libgsttranscoder-%{api}.so.0
 %{_datadir}/gstreamer-%{api}/encoding-profiles
@@ -917,6 +924,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/interfaces/photography*
 %{_includedir}/gstreamer-%{api}/gst/insertbin
 %{_includedir}/gstreamer-%{api}/gst/mpegts
+%{_includedir}/gstreamer-%{api}/gst/play
 %{_includedir}/gstreamer-%{api}/gst/player
 %{_includedir}/gstreamer-%{api}/gst/uridownloader
 %{_includedir}/gstreamer-%{api}/gst/isoff
@@ -929,6 +937,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/pkgconfig/gstreamer-webrtc-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-insertbin-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-play-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-va-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-wayland-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-player-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-sctp-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-photography-%{api}.pc
@@ -942,6 +953,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
 %{_datadir}/gir-1.0/GstMpegts-%{api}.gir
+%{_libdir}/girepository-1.0/GstPlay-%{api}.typelib
+%{_datadir}/gir-1.0/GstPlay-%{api}.gir
 %{_libdir}/girepository-1.0/GstPlayer-%{api}.typelib
 %{_datadir}/gir-1.0/GstPlayer-%{api}.gir
 %{_libdir}/girepository-1.0/GstWebRTC-%{api}.typelib
