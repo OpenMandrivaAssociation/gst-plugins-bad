@@ -930,6 +930,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/isoff
 %{_includedir}/gstreamer-%{api}/gst/sctp
 %{_includedir}/gstreamer-%{api}/gst/transcoder
+%{_includedir}/gstreamer-%{api}/gst/wayland/wayland.h
 %{_includedir}/gstreamer-%{api}/gst/vulkan
 %{_libdir}/pkgconfig/gstreamer-bad-audio-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-plugins-bad-%{api}.pc
