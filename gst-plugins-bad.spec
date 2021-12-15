@@ -482,18 +482,6 @@ This package is in restricted repository as it violates some patents.
 %{_libdir}/gstreamer-%{api}/libgstxvid.so
 %endif
 
-%package -n %{bname}-mms
-Summary:	GStreamer plug-in for mms streams
-Group:		System/Libraries
-Requires:	%{bname}-plugins-base
-BuildRequires:	pkgconfig(libmms)
-
-%description -n %{bname}-mms
-Plug-in supporting the mms protocol based on the libmms library.
-
-%files -n %{bname}-mms
-%{_libdir}/gstreamer-%{api}/libgstmms.so
-
 %package -n %{bname}-rtmp
 Summary:	GStreamer plug-in for rtmp streams
 Group:		System/Libraries
@@ -630,7 +618,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dgs=disabled \
 	-Dtests=disabled \
 	-Dgpl=enabled \
-	-Dlibmms=enabled \
 %if ! %{build_opencv}
 	-Dopencv=disabled \
 %endif
