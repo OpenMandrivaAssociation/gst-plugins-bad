@@ -630,6 +630,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dgs=disabled \
 	-Dtests=disabled \
 	-Dgpl=enabled \
+	-Dlibmms=enabled \
 %if ! %{build_opencv}
 	-Dopencv=disabled \
 %endif
