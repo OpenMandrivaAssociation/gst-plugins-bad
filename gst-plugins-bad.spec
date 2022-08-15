@@ -928,7 +928,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/pkgconfig/gstreamer-insertbin-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-play-%{api}.pc
-%{_libdir}/pkgconfig/gstreamer-va-%{api}.pc
+#{_libdir}/pkgconfig/gstreamer-va-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-wayland-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-player-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-sctp-%{api}.pc
