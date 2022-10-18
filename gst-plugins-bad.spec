@@ -38,6 +38,7 @@
 %define libphotography		%mklibname gstphotography %{api} %{major}
 %define libcodecparsers		%mklibname gstcodecparsers %{api} %{major}
 %define libmpegts		%mklibname gstmpegts %{api} %{major}
+%define libcuda			%mklibname gstcuda %{api} %{major}
 %define libwebrtc		%mklibname gstwebrtc %{api} %{major}
 %define liburidownloader	%mklibname gsturidownloader %{api} %{major}
 %define libinsertbin		%mklibname gstinsertbin %{api} %{major}
@@ -50,13 +51,12 @@
 %define libgstsctp		%mklibname gstsctp %{api} %{major}
 %define libgstopencv		%mklibname gstopencv %{api} %{major}
 %define libgstvulkan		%mklibname gstvulkan %{api} %{major}
-%define libwebrtc		%mklibname gstwebrtc %{api} %{major}
 %define devname			%mklibname -d %{name} %{api}
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.20.3
-Release:	2%{?extrarelsuffix}
+Version:	1.21.1
+Release:	1%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -64,6 +64,7 @@ Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}
 
 # Pending MR for support webrtc-audio-processing-1
 Patch0:		https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/merge_requests/2341.patch
+Patch1:		gst-plugins-bad-1.21.1-buildfix.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
@@ -76,7 +77,7 @@ BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	gettext-devel
 BuildRequires:	fonts-ttf-dejavu
 BuildRequires:	gobject-introspection-devel
-BuildRequires:	kernel-release-headers
+BuildRequires:	kernel-headers
 BuildRequires:	ladspa-devel
 BuildRequires:	flite-devel
 BuildRequires:	abseil-cpp-devel
@@ -151,6 +152,7 @@ BuildRequires:	pkgconfig(wayland-scanner)
 BuildRequires:	pkgconfig(wayland-protocols)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zvbi-0.2)
+BuildRequires:	pkgconfig(libva)
 BuildRequires:	pkgconfig(libva-drm)
 BuildRequires:	pkgconfig(libssh2)
 BuildRequires:	pkgconfig(valgrind)
@@ -210,6 +212,7 @@ Summary:	Sound
 Group:		System/Libraries
 Obsoletes:	%{libbadvideo} < %{EVRD}
 Obsoletes:	%{bname}-musepack < %{EVRD}
+Suggests:	%{bname}-plugins-bad-webrtc = %{EVRD}
 
 %description -n %{bname}-plugins-bad
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -231,8 +234,29 @@ fixing them for you.  New contributors can start here for things to
 work on.
 
 %if %{build_plf}
-This package is in restricted repository as it violates some patents.
+This package is in restricted repository as it might violate some patents.
 %endif
+
+%package -n %{bname}-plugins-bad-webrtc
+Summary:	WebRTC support for gstreamer
+Group:		System/Libraries
+
+%description -n %{bname}-plugins-bad-webrtc
+WebRTC support for gstreamer
+
+%files -n %{bname}-plugins-bad-webrtc
+%{_libdir}/gstreamer-%{api}/libgstwebrtc.so
+%{_libdir}/gstreamer-%{api}/libgstwebrtcdsp.so
+
+%package -n %{bname}-plugins-bad-fluidsynth
+Summary:	FluidSynth MIDI synthesizer support for gstreamer
+Group:		System/Libraries
+
+%description -n %{bname}-plugins-bad-fluidsynth
+FluidSynth MIDI synthesizer support for gstreamer
+
+%files -n %{bname}-plugins-bad-fluidsynth
+%{_libdir}/gstreamer-%{api}/libgstfluidsynthmidi.so
 
 %package -n %{libadaptivedemux}
 Summary:	Libraries for GStreamer streaming-media framework
@@ -348,6 +372,13 @@ Group:		System/Libraries
 %description -n %{libmpegts}
 This package contains the libraries for %{name}%{api}.
 
+%package -n %{libcuda}
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
+
+%description -n %{libcuda}
+This package contains the libraries for %{name}%{api}.
+
 %package -n %{liburidownloader}
 Summary:	Libraries for GStreamer streaming-media framework
 Group:		System/Libraries
@@ -379,6 +410,7 @@ Requires:	%{libgstsctp} = %{EVRD}
 Requires:	%{libgstopencv} = %{version}-%{release}
 %endif
 Requires:	%{libmpegts} = %{version}-%{release}
+Suggests:	%{libcuda} = %{version}-%{release}
 Requires:	%{liburidownloader} = %{version}-%{release}
 Requires:	%{libwebrtc} = %{version}-%{release}
 
@@ -592,6 +624,7 @@ Summary:	Object Introspection interface description for %{name}
 #Requires:	%{libgl} = %{version}
 Requires:	%{libinsertbin} = %{version}
 Requires:	%{libmpegts} = %{version}
+Requires:	%{libcuda} = %{version}
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
@@ -606,6 +639,8 @@ sed -i -e 's#mpc/mpcdec.h#mpcdec/mpcdec.h#g' $(grep -ril 'mpc/mpcdec.h' *)
 export CFLAGS="$CFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
 export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register -std=gnu++17 -Wno-dynamic-exception-spec -Wno-register"
 %meson \
+	-Damfcodec=disabled \
+	-Ddirectshow=disabled \
 	-Dvulkan=enabled \
 	-Dmagicleap=disabled \
 	-Dwasapi=disabled \
@@ -679,6 +714,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstcamerabin.so
 %{_libdir}/gstreamer-%{api}/libgstchromaprint.so
 %{_libdir}/gstreamer-%{api}/libgstcodecalpha.so
+%{_libdir}/gstreamer-%{api}/libgstcodectimestamper.so
 %{_libdir}/gstreamer-%{api}/libgstcoloreffects.so
 %{_libdir}/gstreamer-%{api}/libgstdc1394.so
 %{_libdir}/gstreamer-%{api}/libgstdebugutilsbad.so
@@ -689,7 +725,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstaudiobuffersplit.so
 %{_libdir}/gstreamer-%{api}/libgstaudiomixmatrix.so
 %{_libdir}/gstreamer-%{api}/libgstfaceoverlay.so
-#%{_libdir}/gstreamer-%{api}/libgstgtk.so
+%{_libdir}/gstreamer-%{api}/libgstgtkwayland.so
 #{_libdir}/gstreamer-%{api}/libgstkms.so
 %{_libdir}/gstreamer-%{api}/libgstlegacyrawparse.so
 %{_libdir}/gstreamer-%{api}/libgstteletext.so
@@ -698,12 +734,12 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstldac.so
 %{_libdir}/gstreamer-%{api}/libgstopenaptx.so
 %{_libdir}/gstreamer-%{api}/libgstqroverlay.so
+%{_libdir}/gstreamer-%{api}/libgstqsv.so
 %if %{build_plf}
 %{_libdir}/gstreamer-%{api}/libgstfdkaac.so
 %endif
 %{_libdir}/gstreamer-%{api}/libgstfieldanalysis.so
 %{_libdir}/gstreamer-%{api}/libgstfestival.so
-%{_libdir}/gstreamer-%{api}/libgstfluidsynthmidi.so
 %{_libdir}/gstreamer-%{api}/libgstfrei0r.so
 %{_libdir}/gstreamer-%{api}/libgstgaudieffects.so
 %{_libdir}/gstreamer-%{api}/libgstgdp.so
@@ -786,8 +822,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstaom.so
 %{_libdir}/gstreamer-%{api}/libgstkms.so
 %{_libdir}/gstreamer-%{api}/libgstopenh264.so
-%{_libdir}/gstreamer-%{api}/libgstwebrtc.so
-%{_libdir}/gstreamer-%{api}/libgstwebrtcdsp.so
 %{_libdir}/gstreamer-%{api}/libgstdash.so
 %{_libdir}/gstreamer-%{api}/libgstdvbsubenc.so
 %{_libdir}/gstreamer-%{api}/libgstnvcodec.so
@@ -856,6 +890,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %files -n %{libmpegts}
 %{_libdir}/libgstmpegts-%{api}.so.%{major}*
 
+%files -n %{libcuda}
+%{_libdir}/libgstcuda-%{api}.so.%{major}*
+
 %files -n %{liburidownloader}
 %{_libdir}/libgsturidownloader-%{api}.so.%{major}*
 
@@ -864,6 +901,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 
 %files -n %{libwebrtc}
 %{_libdir}/libgstwebrtc-%{api}.so.%{major}*
+%{_libdir}/libgstwebrtcnice-%{api}.so.%{major}*
 
 %files -n %{libgstwayland}
 %{_libdir}/libgstwayland-%{api}.so.%{major}*
@@ -894,9 +932,11 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgstphotography-%{api}.so
 %{_libdir}/libgstinsertbin-%{api}.so
 %{_libdir}/libgstmpegts-%{api}.so
+%{_libdir}/libgstcuda-%{api}.so
 %{_libdir}/libgsturidownloader-%{api}.so
 %{_libdir}/libgstbadaudio-%{api}.so
 %{_libdir}/libgstwebrtc-%{api}.so
+%{_libdir}/libgstwebrtcnice-%{api}.so
 %{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstplayer-%{api}.so
 %if %{build_opencv}
@@ -909,6 +949,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/audio/
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/
 %{_includedir}/gstreamer-%{api}/gst/codecparsers/
+%{_includedir}/gstreamer-%{api}/gst/cuda/
 %{_includedir}/gstreamer-%{api}/gst/webrtc/
 %{_includedir}/gstreamer-%{api}/gst/interfaces/photography*
 %{_includedir}/gstreamer-%{api}/gst/insertbin
@@ -919,16 +960,19 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/isoff
 %{_includedir}/gstreamer-%{api}/gst/sctp
 %{_includedir}/gstreamer-%{api}/gst/transcoder
-%{_includedir}/gstreamer-%{api}/gst/wayland/wayland.h
+%{_includedir}/gstreamer-%{api}/gst/wayland
+%{_includedir}/gstreamer-%{api}/gst/va
 %{_includedir}/gstreamer-%{api}/gst/vulkan
 %{_libdir}/pkgconfig/gstreamer-bad-audio-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-plugins-bad-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-codecparsers-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-webrtc-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-webrtc-nice-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-insertbin-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-cuda-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-play-%{api}.pc
-#{_libdir}/pkgconfig/gstreamer-va-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-va-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-wayland-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-player-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-sctp-%{api}.pc
@@ -943,6 +987,10 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
 %{_datadir}/gir-1.0/GstMpegts-%{api}.gir
+%{_libdir}/girepository-1.0/CudaGst-%{api}.typelib
+%{_libdir}/girepository-1.0/GstCuda-%{api}.typelib
+%{_datadir}/gir-1.0/CudaGst-%{api}.gir
+%{_datadir}/gir-1.0/GstCuda-%{api}.gir
 %{_libdir}/girepository-1.0/GstPlay-%{api}.typelib
 %{_datadir}/gir-1.0/GstPlay-%{api}.gir
 %{_libdir}/girepository-1.0/GstPlayer-%{api}.typelib
@@ -955,6 +1003,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gir-1.0/GstCodecs-1.0.gir
 %{_libdir}/girepository-1.0/GstTranscoder-1.0.typelib
 %{_datadir}/gir-1.0/GstTranscoder-1.0.gir
+%{_libdir}/girepository-1.0/GstVa-1.0.typelib
+%{_datadir}/gir-1.0/GstVa-1.0.gir
 %{_libdir}/girepository-1.0/GstVulkan-1.0.typelib
 %{_datadir}/gir-1.0/GstVulkan-1.0.gir
 %{_libdir}/girepository-1.0/GstVulkanWayland-1.0.typelib
