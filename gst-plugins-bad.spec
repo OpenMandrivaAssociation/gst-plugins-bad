@@ -689,6 +689,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dwpe=disabled \
 	-Donnx=disabled \
 	-Dzbar=disabled \
+%ifarch aarch64
+	-Dqsv=disabled \
+%endif	
 	--buildtype=release
 
 %meson_build
