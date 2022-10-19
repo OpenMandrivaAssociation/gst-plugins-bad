@@ -689,6 +689,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dwpe=disabled \
 	-Donnx=disabled \
 	-Dzbar=disabled \
+%ifarch aarch64
+	-Dqsv=disabled \
+%endif	
 	--buildtype=release
 
 %meson_build
@@ -734,7 +737,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstldac.so
 %{_libdir}/gstreamer-%{api}/libgstopenaptx.so
 %{_libdir}/gstreamer-%{api}/libgstqroverlay.so
+%ifnarch aarch64
 %{_libdir}/gstreamer-%{api}/libgstqsv.so
+%endif
 %if %{build_plf}
 %{_libdir}/gstreamer-%{api}/libgstfdkaac.so
 %endif
