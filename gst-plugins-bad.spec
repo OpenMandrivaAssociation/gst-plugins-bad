@@ -93,6 +93,7 @@ BuildRequires:	pkgconfig(pangocairo)
 BuildRequires:	pkgconfig(OpenEXR)
 BuildRequires:	pkgconfig(check)
 BuildRequires:	pkgconfig(libdrm)
+BuildRequires:	pkgconfig(ltc)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(dvdnav) >= 4.1.2
 BuildRequires:	pkgconfig(dvdread) >= 4.1.2
