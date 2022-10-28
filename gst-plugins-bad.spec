@@ -69,6 +69,7 @@ Patch1:		gst-plugins-bad-1.21.1-buildfix.patch
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
 %endif
+BuildRequires:	amf-devel
 BuildRequires:	meson
 BuildRequires:	cmake
 BuildRequires:	glslc
@@ -83,6 +84,7 @@ BuildRequires:	flite-devel
 BuildRequires:	abseil-cpp-devel
 BuildRequires:	pkgconfig(aom)
 BuildRequires:	pkgconfig(bluez)
+BuildRequires:	pkgconfig(ffnvcodec)
 BuildRequires:	pkgconfig(libbs2b) >= 3.1.0
 BuildRequires:	pkgconfig(libxml-2.0) >= 2.9.2
 BuildRequires:	pkgconfig(pango)
@@ -146,6 +148,7 @@ BuildRequires:	pkgconfig(soundtouch)
 BuildRequires:	pkgconfig(spandsp) >= 0.0.6
 BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(vdpau)
+BuildRequires:	pkgconfig(vpl)
 BuildRequires:	pkgconfig(wayland-client)
 BuildRequires:	pkgconfig(wayland-egl)
 BuildRequires:	pkgconfig(wayland-scanner)
@@ -639,7 +642,7 @@ sed -i -e 's#mpc/mpcdec.h#mpcdec/mpcdec.h#g' $(grep -ril 'mpc/mpcdec.h' *)
 export CFLAGS="$CFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
 export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register -std=gnu++17 -Wno-dynamic-exception-spec -Wno-register"
 %meson \
-	-Damfcodec=disabled \
+	-Damfcodec=enabled \
 	-Ddirectshow=disabled \
 	-Dvulkan=enabled \
 	-Dmagicleap=disabled \
@@ -647,6 +650,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dwasapi2=disabled \
 	-Davtp=disabled \
 	-Dmicrodns=disabled \
+	-Dmediafoundation=enabled \
+	-Dnvcodec=enabled \
 	-Dsvthevcenc=disabled \
 	-Dzxing=disabled \
 	-Ddirectfb=disabled \
@@ -684,9 +689,11 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dmusepack=disabled \
 	-Dopenmpt=disabled \
 	-Dopenni2=disabled \
+	-Dsbc=enabled \
 	-Dsctp=disabled \
 	-Dsrt=disabled \
 	-Dwpe=disabled \
+	-Dva=enabled \
 	-Donnx=disabled \
 	-Dzbar=disabled \
 %ifarch aarch64
