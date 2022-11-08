@@ -65,6 +65,7 @@ Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}
 # Pending MR for support webrtc-audio-processing-1
 Patch0:		https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/merge_requests/2341.patch
 Patch1:		gst-plugins-bad-1.21.1-buildfix.patch
+Patch2:		gst-plugins-bad-1.21.2-openaptx-0.2.1.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
