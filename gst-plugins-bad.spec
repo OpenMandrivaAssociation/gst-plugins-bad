@@ -1,57 +1,57 @@
 %define _disable_ld_no_undefined 1
 # Workaround for debugsource package being empty
 %define _empty_manifest_terminate_build 0
-%define build_amrwb	0
-%define build_faac	0
-%define build_faad	0
-%define build_xvid	0
-%define build_dts	0
-%define build_dirac	0
-%define build_gme	1
-%define build_opencv	1
+%define build_amrwb 0
+%define build_faac 0
+%define build_faad 0
+%define build_xvid 0
+%define build_dts 0
+%define build_dirac 0
+%define build_gme 1
+%define build_opencv 1
 
 ##########################
 # Hardcode PLF build
-%define build_plf	0
+%define build_plf 0
 ##########################
 %if "%{disttag}" == "mdk"
-%define build_plf	1
+%define build_plf 1
 %endif
 
 %if %{build_plf}
 %define distsuffix plf
 # make EVR of plf build higher than regular to allow update, needed with rpm5 mkrel
 %define extrarelsuffix plf
-%define build_amrwb	0
-%define build_faac	1
-%define build_faad	1
-%define build_xvid	0
-%define build_dirac	0
-%define build_dts	1
+%define build_amrwb 0
+%define build_faac 1
+%define build_faad 1
+%define build_xvid 0
+%define build_dirac 0
+%define build_dts 1
 %endif
 
-%define bname	gstreamer%{api}
-%define api	1.0
-%define major	0
-%define libadaptivedemux	%mklibname gstadaptivedemux %{api} %{major}
-%define libbasecamerabinsrc	%mklibname gstbasecamerabinsrc %{api} %{major}
-%define libphotography		%mklibname gstphotography %{api} %{major}
-%define libcodecparsers		%mklibname gstcodecparsers %{api} %{major}
-%define libmpegts		%mklibname gstmpegts %{api} %{major}
-%define libcuda			%mklibname gstcuda %{api} %{major}
-%define libwebrtc		%mklibname gstwebrtc %{api} %{major}
-%define liburidownloader	%mklibname gsturidownloader %{api} %{major}
-%define libinsertbin		%mklibname gstinsertbin %{api} %{major}
-%define girname			%mklibname gstreamer-plugins-bad-gir %{api}
-%define libbadaudio		%mklibname gstbadaudio %{api} %{major}
-%define libisoff		%mklibname gstisoff %{api} %{major}
-%define libbadvideo		%mklibname gstbadvideo %{api} %{major}
-%define libgstwayland		%mklibname gstwayland %{api} %{major}
-%define libgstplayer		%mklibname gstplayer %{api} %{major}
-%define libgstsctp		%mklibname gstsctp %{api} %{major}
-%define libgstopencv		%mklibname gstopencv %{api} %{major}
-%define libgstvulkan		%mklibname gstvulkan %{api} %{major}
-%define devname			%mklibname -d %{name} %{api}
+%define bname gstreamer%{api}
+%define api 1.0
+%define major 0
+%define libadaptivedemux %mklibname gstadaptivedemux %{api} %{major}
+%define libbasecamerabinsrc %mklibname gstbasecamerabinsrc %{api} %{major}
+%define libphotography %mklibname gstphotography %{api} %{major}
+%define libcodecparsers %mklibname gstcodecparsers %{api} %{major}
+%define libmpegts %mklibname gstmpegts %{api} %{major}
+%define libcuda %mklibname gstcuda %{api} %{major}
+%define libwebrtc %mklibname gstwebrtc %{api} %{major}
+%define liburidownloader %mklibname gsturidownloader %{api} %{major}
+%define libinsertbin %mklibname gstinsertbin %{api} %{major}
+%define girname %mklibname gstreamer-plugins-bad-gir %{api}
+%define libbadaudio %mklibname gstbadaudio %{api} %{major}
+%define libisoff %mklibname gstisoff %{api} %{major}
+%define libbadvideo %mklibname gstbadvideo %{api} %{major}
+%define libgstwayland %mklibname gstwayland %{api} %{major}
+%define libgstplayer %mklibname gstplayer %{api} %{major}
+%define libgstsctp %mklibname gstsctp %{api} %{major}
+%define libgstopencv %mklibname gstopencv %{api} %{major}
+%define libgstvulkan %mklibname gstvulkan %{api} %{major}
+%define devname %mklibname -d %{name} %{api}
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
@@ -209,7 +209,7 @@ This package is in restricted repository as it violates some patents.
 %endif
 
 %package -n %{bname}-plugins-bad
-Summary:	Sound
+Summary:	GStreamer bad plug-ins
 Group:		System/Libraries
 Obsoletes:	%{libbadvideo} < %{EVRD}
 Obsoletes:	%{bname}-musepack < %{EVRD}
@@ -579,7 +579,7 @@ This package is in restricted repository as it violates some patents.
 
 %package -n %{bname}-wayland
 Summary:	GStreamer plugin for Wayland support
-Group:		Sound
+Group:		Video
 Requires:	%{bname}-plugins-base
 
 %description -n %{bname}-wayland
