@@ -56,7 +56,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.22.7
-Release:	3%{?extrarelsuffix}1
+Release:	32
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -394,6 +394,13 @@ Group:		System/Libraries
 
 %description -n %{libisoff}
 This package contains the libraries for %{name}%{api}.
+
+%package ladspa
+Summary:	LADSPA plugin for the GStreamer streaming-media framework
+Group:		System/Libraries
+
+%description ladspa
+LADSPA plugin for the GStreamer streaming-media framework
 
 %package -n %{devname}
 Summary:	Libraries and include files for GStreamer streaming-media framework
@@ -756,7 +763,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstinterlace.so
 %{_libdir}/gstreamer-%{api}/libgstjpegformat.so
 %{_libdir}/gstreamer-%{api}/libgstkate.so
-%{_libdir}/gstreamer-%{api}/libgstladspa.so
 %{_libdir}/gstreamer-%{api}/libgstlv2.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsmux.so
 %{_libdir}/gstreamer-%{api}/libgstmpegpsdemux.so
@@ -847,6 +853,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgsttranscoder-%{api}.so
 %{_libdir}/libgsttranscoder-%{api}.so.0
 %{_datadir}/gstreamer-%{api}/encoding-profiles
+
+%files ladspa
+%{_libdir}/gstreamer-%{api}/libgstladspa.so
 
 %files -n %{bname}-wayland
 %{_libdir}/gstreamer-%{api}/libgstwaylandsink.so
