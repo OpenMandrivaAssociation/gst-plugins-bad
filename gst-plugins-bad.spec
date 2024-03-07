@@ -62,8 +62,6 @@ Group:		Sound
 Url:		https://gstreamer.freedesktop.org/
 Source0:	https://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 
-# Pending MR for support webrtc-audio-processing-1
-Patch0:		https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/merge_requests/2341.patch
 Patch1:		gst-plugins-bad-1.21.1-buildfix.patch
 Patch2:		gst-plugins-bad-1.21.2-openaptx-0.2.1.patch
 Patch3:		gst-plugins-bad-spandsp-20230428.patch
