@@ -55,12 +55,12 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.22.10
+Version:	1.24.0
 Release:	1
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
-Url:		http://gstreamer.freedesktop.org/
-Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
+Url:		https://gstreamer.freedesktop.org/
+Source0:	https://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 
 # Pending MR for support webrtc-audio-processing-1
 Patch0:		https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/merge_requests/2341.patch
