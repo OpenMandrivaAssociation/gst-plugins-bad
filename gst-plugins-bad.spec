@@ -869,9 +869,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstsvtav1.so
 %{_libdir}/gstreamer-%{api}/libgstunixfd.so
 %{_libdir}/gstreamer-%{api}/libgstuvcgadget.so
-#{_libdir}/gstreamer-%{api}/libgstanalytics-1.0.so*
-#{_libdir}/gstreamer-%{api}/libgstdxva-1.0.so*
-#{_libdir}/gstreamer-%{api}/libgstmse-1.0.so*
+%{_libdir}/libgstanalytics-1.0.so*
+%{_libdir}/libgstdxva-1.0.so*
+%{_libdir}/libgstmse-1.0.so*
 %{_datadir}/gstreamer-%{api}/encoding-profiles
 
 %files ladspa
