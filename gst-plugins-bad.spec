@@ -689,6 +689,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dx265=disabled \
 %endif
 	-Dwayland=enabled \
+ 	-Dva=enabled \
 	-Dmsdk=disabled \
 	-Dopensles=disabled \
 	-Dtinyalsa=disabled \
@@ -854,6 +855,18 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgstva-1.0.so*
 %{_libdir}/libgsttranscoder-%{api}.so
 %{_libdir}/libgsttranscoder-%{api}.so.0
+%{_libdir}/gstreamer-1.0/libgstanalyticsoverlay.so
+%{_libdir}/gstreamer-%{api}/libgstcodec2json.so
+%{_libdir}/gstreamer-%{api}/libgstinsertbin.so
+%{_libdir}/gstreamer-%{api}/libgstlc3.so
+%{_libdir}/gstreamer-%{api}/libgstmse.so
+%{_libdir}/gstreamer-%{api}/libgstsctp.so
+%{_libdir}/gstreamer-%{api}/libgstsvtav1.so
+%{_libdir}/gstreamer-%{api}/libgstunixfd.so
+%{_libdir}/gstreamer-%{api}/libgstuvcgadget.so
+%{_libdir}/gstreamer-%{api}/libgstanalytics-1.0.so*
+%{_libdir}/gstreamer-%{api}/libgstdxva-1.0.so*
+%{_libdir}/gstreamer-%{api}/libgstmse-1.0.so*
 %{_datadir}/gstreamer-%{api}/encoding-profiles
 
 %files ladspa
@@ -964,6 +977,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgstsctp-%{api}.so
 %{_libdir}/libgstisoff-%{api}.so
 %{_libdir}/libgstvulkan-%{api}.so
+%{_includedir}/gstreamer-%{api}/gst/analytics/
 %{_includedir}/gstreamer-%{api}/gst/audio/
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/
 %{_includedir}/gstreamer-%{api}/gst/codecparsers/
@@ -972,6 +986,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/interfaces/photography*
 %{_includedir}/gstreamer-%{api}/gst/insertbin
 %{_includedir}/gstreamer-%{api}/gst/mpegts
+%{_includedir}/gstreamer-%{api}/gst/mse/
 %{_includedir}/gstreamer-%{api}/gst/play
 %{_includedir}/gstreamer-%{api}/gst/player
 %{_includedir}/gstreamer-%{api}/gst/uridownloader
@@ -981,6 +996,8 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/wayland
 %{_includedir}/gstreamer-%{api}/gst/va
 %{_includedir}/gstreamer-%{api}/gst/vulkan
+%{_libdir}/pkgconfig/gstreamer-analytics-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-mse-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-bad-audio-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-plugins-bad-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-codecparsers-%{api}.pc
@@ -1001,6 +1018,12 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/pkgconfig/gstreamer-vulkan-xcb-%{api}.pc
 
 %files -n %{girname}
+%{_libdir}/girepository-1.0/GstAnalytics-%{api}.typelib
+%{_datadir}/gir-1.0/GstAnalytics-%{api}.gir
+%{_libdir}/girepository-1.0/GstDxva-%{api}.typelib
+%{_datadir}/gir-1.0/GstDxva-%{api}.gir
+%{_libdir}/girepository-1.0/GstMse-%{api}.typelib
+%{_datadir}/gir-1.0/GstMse-%{api}.gir
 %{_libdir}/girepository-1.0/GstInsertBin-%{api}.typelib
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
