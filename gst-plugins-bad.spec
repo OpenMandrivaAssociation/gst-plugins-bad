@@ -137,6 +137,7 @@ BuildRequires:	pkgconfig(orc-0.4) >= 0.4.5
 BuildRequires:	pkgconfig(openh264)
 BuildRequires:	pkgconfig(librsvg-2.0) >= 2.36
 BuildRequires:	pkgconfig(librtmp)
+BuildRequires:	pkgconfig(libsctp)
 BuildRequires:	pkgconfig(lrdf)
 BuildRequires:	pkgconfig(raptor2)
 BuildRequires:	pkgconfig(sbc) >= 1.0
