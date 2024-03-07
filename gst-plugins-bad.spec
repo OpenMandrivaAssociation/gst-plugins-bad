@@ -648,6 +648,7 @@ export CFLAGS="$CFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-re
 export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register -std=gnu++17 -Wno-dynamic-exception-spec -Wno-register"
 %meson \
 	-Damfcodec=disabled \
+ 	-Dqt6d3d11=disabled \
 	-Ddirectshow=disabled \
 	-Dvulkan=enabled \
 	-Dmagicleap=disabled \
