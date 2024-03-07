@@ -142,6 +142,8 @@ BuildRequires:	pkgconfig(lrdf)
 BuildRequires:	pkgconfig(raptor2)
 BuildRequires:	pkgconfig(sbc) >= 1.0
 BuildRequires:	pkgconfig(sdl)
+BuildRequires:	pkgconfig(SvtAv1Dec)
+BuildRequires:	pkgconfig(SvtAv1Enc)
 BuildRequires:	pkgconfig(lilv-0)
 BuildRequires:	pkgconfig(sndfile)
 BuildRequires:	pkgconfig(soundtouch)
@@ -655,6 +657,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dmagicleap=disabled \
 	-Dwasapi=disabled \
 	-Dwasapi2=disabled \
+ 	-Dsvtav1=enabled \
 	-Davtp=disabled \
 	-Dmicrodns=disabled \
 	-Dsvthevcenc=disabled \
