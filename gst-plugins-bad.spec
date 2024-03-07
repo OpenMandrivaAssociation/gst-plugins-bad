@@ -126,6 +126,10 @@ BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libsrtp2)
 BuildRequires:	pkgconfig(libofa) >= 0.9.3
 BuildRequires:	pkgconfig(libopenjp2)
+%ifnarch aarch64
+BuildRequires:	pkgconfig(libmfx-gen)
+BuildRequires:	pkgconfig(vpl)
+%endif
 BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(neon)
@@ -654,6 +658,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
  	-Dqt6d3d11=disabled \
 	-Ddirectshow=disabled \
 	-Dvulkan=enabled \
+ 	-Dvulkan-video=enabled \
 	-Dmagicleap=disabled \
 	-Dwasapi=disabled \
 	-Dwasapi2=disabled \
