@@ -111,6 +111,7 @@ BuildRequires:	pkgconfig(gstreamer-%{api}) >= 1.12.3
 BuildRequires:	pkgconfig(gstreamer-video-%{api}) >= 1.12.3
 BuildRequires:	pkgconfig(gudev-1.0)
 BuildRequires:	pkgconfig(kate)
+BuildRequires:	pkgconfig(lc3)
 BuildRequires:	pkgconfig(ldacBT-abr)
 BuildRequires:	pkgconfig(ldacBT-enc)
 BuildRequires:	pkgconfig(libass)
