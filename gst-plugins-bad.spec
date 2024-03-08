@@ -971,7 +971,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgstphotography-%{api}.so
 %{_libdir}/libgstinsertbin-%{api}.so
 %{_libdir}/libgstmpegts-%{api}.so
+%ifnarch aarch64
 %{_libdir}/libgstcuda-%{api}.so
+%endif
 %{_libdir}/libgsturidownloader-%{api}.so
 %{_libdir}/libgstbadaudio-%{api}.so
 %{_libdir}/libgstwebrtc-%{api}.so
@@ -989,7 +991,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/audio/
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/
 %{_includedir}/gstreamer-%{api}/gst/codecparsers/
+%ifnarch aarch64
 %{_includedir}/gstreamer-%{api}/gst/cuda/
+%endif
 %{_includedir}/gstreamer-%{api}/gst/webrtc/
 %{_includedir}/gstreamer-%{api}/gst/interfaces/photography*
 %{_includedir}/gstreamer-%{api}/gst/insertbin
@@ -1012,7 +1016,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/pkgconfig/gstreamer-webrtc-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-webrtc-nice-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-insertbin-%{api}.pc
+%ifnarch aarch64
 %{_libdir}/pkgconfig/gstreamer-cuda-%{api}.pc
+%endif
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-play-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-va-%{api}.pc
