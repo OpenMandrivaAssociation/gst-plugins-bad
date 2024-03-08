@@ -425,7 +425,7 @@ Requires:	%{libgstsctp} = %{EVRD}
 Requires:	%{libgstopencv} = %{version}-%{release}
 %endif
 Requires:	%{libmpegts} = %{version}-%{release}
-Suggests:	%{libcuda} = %{version}-%{release}
+Requires:	%{libcuda} = %{version}-%{release}
 Requires:	%{liburidownloader} = %{version}-%{release}
 Requires:	%{libwebrtc} = %{version}-%{release}
 
@@ -711,7 +711,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
  	-Daja=disabled \
 %ifarch aarch64
 	-Dqsv=disabled \
-        -Dnvcodec=disabled \
 %endif	
 	--buildtype=release
 
@@ -846,9 +845,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstopenh264.so
 %{_libdir}/gstreamer-%{api}/libgstdash.so
 %{_libdir}/gstreamer-%{api}/libgstdvbsubenc.so
-%ifnarch aarch64
 %{_libdir}/gstreamer-%{api}/libgstnvcodec.so
-%endif
 %{_libdir}/gstreamer-%{api}/libgstrist.so
 %{_libdir}/gstreamer-%{api}/libgstrtmp2.so
 %{_libdir}/gstreamer-%{api}/libgstrtpmanagerbad.so
