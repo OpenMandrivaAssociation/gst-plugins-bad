@@ -1042,10 +1042,12 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
 %{_datadir}/gir-1.0/GstMpegts-%{api}.gir
+%ifnarch aarch64
 %{_libdir}/girepository-1.0/CudaGst-%{api}.typelib
 %{_libdir}/girepository-1.0/GstCuda-%{api}.typelib
 %{_datadir}/gir-1.0/CudaGst-%{api}.gir
 %{_datadir}/gir-1.0/GstCuda-%{api}.gir
+%endif
 %{_libdir}/girepository-1.0/GstPlay-%{api}.typelib
 %{_datadir}/gir-1.0/GstPlay-%{api}.gir
 %{_libdir}/girepository-1.0/GstPlayer-%{api}.typelib
