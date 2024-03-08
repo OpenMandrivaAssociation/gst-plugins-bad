@@ -928,10 +928,10 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 
 %files -n %{libmpegts}
 %{_libdir}/libgstmpegts-%{api}.so.%{major}*
-
+%ifnarch aarch64
 %files -n %{libcuda}
 %{_libdir}/libgstcuda-%{api}.so.%{major}*
-
+%endif
 %files -n %{liburidownloader}
 %{_libdir}/libgsturidownloader-%{api}.so.%{major}*
 
