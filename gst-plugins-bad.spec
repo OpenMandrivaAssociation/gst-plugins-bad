@@ -639,7 +639,9 @@ Summary:	Object Introspection interface description for %{name}
 #Requires:	%{libgl} = %{version}
 Requires:	%{libinsertbin} = %{version}
 Requires:	%{libmpegts} = %{version}
+%ifnarch aarch64
 Requires:	%{libcuda} = %{version}
+%endif
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
