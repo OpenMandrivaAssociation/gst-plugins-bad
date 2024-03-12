@@ -1,7 +1,7 @@
 %define _disable_ld_no_undefined 1
 # Workaround for debugsource package being empty
 %define _empty_manifest_terminate_build 0
-%define build_amrwb 1
+%define build_amrwb 0
 %define build_faac 0
 %define build_faad 0
 %define build_xvid 0
@@ -22,7 +22,7 @@
 %define distsuffix plf
 # make EVR of plf build higher than regular to allow update, needed with rpm5 mkrel
 %define extrarelsuffix plf
-%define build_amrwb 1
+%define build_amrwb 0
 %define build_faac 1
 %define build_faad 1
 %define build_xvid 0
