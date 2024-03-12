@@ -56,7 +56,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.24.0
-Release:	2
+Release:	3
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		https://gstreamer.freedesktop.org/
@@ -191,7 +191,7 @@ BuildRequires:	pkgconfig(Qt5WaylandClient)
 # vulkan support
 BuildRequires:	%{_lib}vulkan-devel
 BuildRequires:	egl-devel
-Suggests: (%{bname}-gtk-wayland if %{_lib}gtk3_0)
+Recommends: (%{bname}-gtk-wayland if %{_lib}gtk3_0)
 %rename gstreamer1.0-plugins-bad
 
 %description
