@@ -172,6 +172,7 @@ BuildRequires:	pkgconfig(webrtc-audio-processing-1)
 BuildRequires:	pkgconfig(ffnvcodec)
 BuildRequires:	pkgconfig(libopenaptx)
 BuildRequires:	pkgconfig(libqrencode)
+BuildRequires:	pkgconfig(wildmidi)
 BuildRequires:	typelib(GstApp)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
