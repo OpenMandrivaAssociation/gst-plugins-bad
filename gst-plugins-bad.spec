@@ -1,7 +1,7 @@
 %define _disable_ld_no_undefined 1
 # Workaround for debugsource package being empty
 %define _empty_manifest_terminate_build 0
-%define build_amrwb 0
+%define build_amrwb 1
 %define build_faac 0
 %define build_faad 0
 %define build_xvid 0
@@ -22,7 +22,7 @@
 %define distsuffix plf
 # make EVR of plf build higher than regular to allow update, needed with rpm5 mkrel
 %define extrarelsuffix plf
-%define build_amrwb 0
+%define build_amrwb 1
 %define build_faac 1
 %define build_faad 1
 %define build_xvid 0
@@ -56,7 +56,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.24.0
-Release:	1
+Release:	2
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		https://gstreamer.freedesktop.org/
@@ -190,6 +190,7 @@ BuildRequires:	pkgconfig(Qt5WaylandClient)
 # vulkan support
 BuildRequires:	%{_lib}vulkan-devel
 BuildRequires:	egl-devel
+Suggests: (%{bname}-gtk-wayland if %{_lib}gtk3_0)
 %rename gstreamer1.0-plugins-bad
 
 %description
@@ -599,6 +600,14 @@ Requires:	%{bname}-plugins-base
 %description -n %{bname}-wayland
 GStreamer plugin for Wayland support
 
+%package -n %{bname}-gtk-wayland
+Summary:	GStreamer plugin for GTK on Wayland support
+Group:		Video
+Requires:	%{bname}-plugins-base
+
+%description -n %{bname}-gtk-wayland
+GStreamer plugin for GTK on Wayland support
+
 %package -n %{bname}-gsm
 Summary:	GStreamer plugin for GSM lossy audio format
 Group:		Sound
@@ -750,7 +759,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstaudiobuffersplit.so
 %{_libdir}/gstreamer-%{api}/libgstaudiomixmatrix.so
 %{_libdir}/gstreamer-%{api}/libgstfaceoverlay.so
-%{_libdir}/gstreamer-%{api}/libgstgtkwayland.so
 %{_libdir}/gstreamer-%{api}/libgstlegacyrawparse.so
 %{_libdir}/gstreamer-%{api}/libgstteletext.so
 %{_libdir}/gstreamer-%{api}/libgstttmlsubs.so
@@ -884,6 +892,9 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 
 %files -n %{bname}-wayland
 %{_libdir}/gstreamer-%{api}/libgstwaylandsink.so
+
+%files -n %{bname}-gtk-wayland
+%{_libdir}/gstreamer-%{api}/libgstgtkwayland.so
 
 %if %{build_faad}
 %files -n %{bname}-faad
