@@ -146,7 +146,6 @@ BuildRequires:	pkgconfig(lrdf)
 BuildRequires:	pkgconfig(raptor2)
 BuildRequires:	pkgconfig(sbc) >= 1.0
 BuildRequires:	pkgconfig(sdl)
-BuildRequires:	pkgconfig(SvtAv1Dec)
 BuildRequires:	pkgconfig(SvtAv1Enc)
 BuildRequires:	pkgconfig(lilv-0)
 BuildRequires:	pkgconfig(sndfile)
