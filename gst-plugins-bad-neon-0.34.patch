@@ -1,0 +1,9 @@
+diff -up gst-plugins-bad-1.24.10/ext/neon/meson.build.omv~ gst-plugins-bad-1.24.10/ext/neon/meson.build
+--- gst-plugins-bad-1.24.10/ext/neon/meson.build.omv~	2024-12-08 16:07:42.736909257 +0100
++++ gst-plugins-bad-1.24.10/ext/neon/meson.build	2024-12-08 16:07:53.902564374 +0100
+@@ -1,4 +1,4 @@
+-neon_dep = dependency('neon', version: ['>= 0.27', '<= 0.33.99'],
++neon_dep = dependency('neon', version: ['>= 0.27', '<= 1.0.0'],
+                       required : get_option('neon'))
+ 
+ if neon_dep.found()

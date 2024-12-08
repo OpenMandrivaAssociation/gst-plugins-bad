@@ -65,6 +65,7 @@ Source0:	https://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version
 Patch1:		gst-plugins-bad-1.21.1-buildfix.patch
 Patch2:		gst-plugins-bad-1.21.2-openaptx-0.2.1.patch
 Patch3:		gst-plugins-bad-spandsp-20230428.patch
+Patch4:		gst-plugins-bad-neon-0.34.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
