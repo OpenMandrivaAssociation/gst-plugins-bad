@@ -55,8 +55,8 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.24.12
-Release:	2
+Version:	1.26.0
+Release:	1
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		https://gstreamer.freedesktop.org/
@@ -721,6 +721,13 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Donnx=disabled \
 	-Dzbar=disabled \
  	-Daja=disabled \
+  	-Dnvdswrapper=disabled \
+   	-Dnvcomp=disabled \
+    	-Dcuda-nvmm=disabled \
+     	-Dandroidmedia=disabled \
+      	-Dlcevcdecoder=disabled \
+       	-Dlcevcencoder=disabled \
+	-Dsvtjpegxs=disabled \
 %ifarch aarch64
 	-Dqsv=disabled \
         -Dnvcodec=disabled \
@@ -767,6 +774,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstldac.so
 %{_libdir}/gstreamer-%{api}/libgstopenaptx.so
 %{_libdir}/gstreamer-%{api}/libgstqroverlay.so
+%{_libdir}/gstreamer-%{api}/libgsttensordecoders.so
 %ifnarch aarch64
 %{_libdir}/gstreamer-%{api}/libgstqsv.so
 %endif
