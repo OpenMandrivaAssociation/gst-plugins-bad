@@ -722,6 +722,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dzbar=disabled \
  	-Daja=disabled \
   	-Dnvdswrapper=disabled \
+   	-Dnvcomp=disabled \
 %ifarch aarch64
 	-Dqsv=disabled \
         -Dnvcodec=disabled \
