@@ -727,6 +727,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
      	-Dandroidmedia=disabled \
       	-Dlcevcdecoder=disabled \
        	-Dlcevcencoder=disabled \
+	-Dsvtjpegxs=disabled \
 %ifarch aarch64
 	-Dqsv=disabled \
         -Dnvcodec=disabled \
