@@ -55,8 +55,8 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.26.3
-Release:	4
+Version:	1.26.4
+Release:	1
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		https://gstreamer.freedesktop.org/
