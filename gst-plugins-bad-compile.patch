@@ -1,0 +1,52 @@
+diff -up gst-plugins-bad-1.26.10/ext/svtav1/gstsvtav1enc.c.omv~ gst-plugins-bad-1.26.10/ext/svtav1/gstsvtav1enc.c
+--- gst-plugins-bad-1.26.10/ext/svtav1/gstsvtav1enc.c.omv~	2026-02-28 02:02:14.207986820 +0100
++++ gst-plugins-bad-1.26.10/ext/svtav1/gstsvtav1enc.c	2026-02-28 02:07:19.697228764 +0100
+@@ -80,7 +80,6 @@ typedef struct _GstSvtAv1Enc
+ #else
+   gint logical_processors;
+ #endif
+-  gint target_socket;
+   gchar *parameters_string;
+ 
+   EbBufferHeaderType *input_buf;
+@@ -378,7 +377,6 @@ gst_svtav1enc_init (GstSvtAv1Enc * svtav
+ #else
+   svtav1enc->logical_processors = PROP_LOGICAL_PROCESSORS_DEFAULT;
+ #endif
+-  svtav1enc->target_socket = PROP_TARGET_SOCKET_DEFAULT;
+   svtav1enc->parameters_string = PROP_PARAMETERS_STRING_DEFAULT;
+ }
+ 
+@@ -439,7 +437,6 @@ gst_svtav1enc_set_property (GObject * ob
+ #endif
+       break;
+     case PROP_TARGET_SOCKET:
+-      svtav1enc->target_socket = g_value_get_int (value);
+       break;
+     case PROP_PARAMETERS_STRING:{
+       g_free (svtav1enc->parameters_string);
+@@ -500,7 +497,6 @@ gst_svtav1enc_get_property (GObject * ob
+ #endif
+       break;
+     case PROP_TARGET_SOCKET:
+-      g_value_set_int (value, svtav1enc->target_socket);
+       break;
+     case PROP_PARAMETERS_STRING:
+       g_value_set_string (value, svtav1enc->parameters_string);
+@@ -586,7 +582,7 @@ gst_svtav1enc_configure_svt (GstSvtAv1En
+     GST_DEBUG_OBJECT (svtav1enc, "Enabling CQP mode (qp %u)", svtav1enc->cqp);
+     svtav1enc->svt_config->qp = svtav1enc->cqp;
+     svtav1enc->svt_config->rate_control_mode = SVT_AV1_RC_MODE_CQP_OR_CRF;
+-    svtav1enc->svt_config->enable_adaptive_quantization = FALSE;
++    svtav1enc->svt_config->aq_mode = 0;
+     svtav1enc->svt_config->force_key_frames = TRUE;
+   } else {
+     GST_DEBUG_OBJECT (svtav1enc, "Using default rate control settings");
+@@ -598,7 +594,6 @@ gst_svtav1enc_configure_svt (GstSvtAv1En
+ #else
+   svtav1enc->svt_config->logical_processors = svtav1enc->logical_processors;
+ #endif
+-  svtav1enc->svt_config->target_socket = svtav1enc->target_socket;
+   gst_svtav1enc_parse_parameters_string (svtav1enc);
+ 
+   /* set properties out of GstVideoInfo */

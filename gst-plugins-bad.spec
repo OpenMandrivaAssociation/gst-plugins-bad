@@ -56,7 +56,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.26.10
-Release:	1
+Release:	2
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		https://gstreamer.freedesktop.org/
@@ -66,6 +66,7 @@ Patch1:		gst-plugins-bad-1.21.1-buildfix.patch
 Patch2:		gst-plugins-bad-1.21.2-openaptx-0.2.1.patch
 Patch3:		gst-plugins-bad-spandsp-20230428.patch
 #Patch4:		gst-plugins-bad-neon-0.34.patch
+Patch4:		gst-plugins-bad-compile.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
