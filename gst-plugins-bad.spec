@@ -55,8 +55,8 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.26.10
-Release:	2
+Version:	1.28.1
+Release:	1
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		https://gstreamer.freedesktop.org/
@@ -66,7 +66,6 @@ Patch1:		gst-plugins-bad-1.21.1-buildfix.patch
 Patch2:		gst-plugins-bad-1.21.2-openaptx-0.2.1.patch
 Patch3:		gst-plugins-bad-spandsp-20230428.patch
 #Patch4:		gst-plugins-bad-neon-0.34.patch
-Patch4:		gst-plugins-bad-compile.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
@@ -729,6 +728,11 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
       	-Dlcevcdecoder=disabled \
        	-Dlcevcencoder=disabled \
 	-Dsvtjpegxs=disabled \
+	-Dmpeghdec=disabled \
+	-Dtflite=disabled \
+	-Dvmaf=disabled \
+	-Dwpe2=disabled \
+	-Dhip=disabled \
 %ifarch aarch64
 	-Dqsv=disabled \
         -Dnvcodec=disabled \
@@ -743,7 +747,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %find_lang %{name}-%{api}
 
 %files -n %{bname}-plugins-bad -f %{name}-%{api}.lang
-%doc AUTHORS COPYING README* NEWS
+%doc COPYING README*
 %{_bindir}/gst-transcoder-%{api}
 %{_libdir}/gstreamer-%{api}/libgstadpcmdec.so
 %{_libdir}/gstreamer-%{api}/libgstadpcmenc.so
@@ -826,7 +830,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gstreamer-%{api}/presets/GstVoAmrwbEnc.prs
 %endif
 %{_libdir}/gstreamer-%{api}/libgstmodplug.so
-%{_libdir}/gstreamer-%{api}/libgsty4mdec.so
 %{_libdir}/gstreamer-%{api}/libgstaccurip.so
 %{_libdir}/gstreamer-%{api}/libgstaiff.so
 %{_libdir}/gstreamer-%{api}/libgstaudiofxbad.so
@@ -1082,3 +1085,5 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gir-1.0/GstVulkanWayland-1.0.gir
 %{_libdir}/girepository-1.0/GstVulkanXCB-1.0.typelib
 %{_datadir}/gir-1.0/GstVulkanXCB-1.0.gir
+%{_libdir}/girepository-1.0/GstCodecParsers-1.0.typelib
+%{_datadir}/gir-1.0/GstCodecParsers-1.0.gir
