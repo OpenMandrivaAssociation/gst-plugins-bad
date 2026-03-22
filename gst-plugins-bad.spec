@@ -56,7 +56,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.28.1
-Release:	1
+Release:	2
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		https://gstreamer.freedesktop.org/
@@ -85,7 +85,7 @@ BuildRequires:	abseil-cpp-devel
 BuildRequires:	pkgconfig(aom)
 BuildRequires:	pkgconfig(bluez)
 BuildRequires:	pkgconfig(libbs2b) >= 3.1.0
-BuildRequires:	pkgconfig(libxml-2.0) >= 2.9.2
+BuildRequires:	pkgconfig(libxml-2.0) >= 2.15.2
 BuildRequires:	pkgconfig(pango)
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(pangocairo)
@@ -168,7 +168,7 @@ BuildRequires:	pkgconfig(libpcap)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(nice)
-BuildRequires:	pkgconfig(webrtc-audio-processing-1)
+BuildRequires:	pkgconfig(webrtc-audio-processing-2)
 BuildRequires:	pkgconfig(ffnvcodec)
 BuildRequires:	pkgconfig(libopenaptx)
 BuildRequires:	pkgconfig(libqrencode)
