@@ -664,7 +664,7 @@ GObject Introspection interface description for %{name}.
 sed -i -e 's#mpc/mpcdec.h#mpcdec/mpcdec.h#g' $(grep -ril 'mpc/mpcdec.h' *)
 
 export CFLAGS="$CFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register"
-export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register -std=gnu++17 -Wno-dynamic-exception-spec -Wno-register"
+export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecated-register -std=gnu++20 -Wno-dynamic-exception-spec -Wno-register"
 %meson \
 	-Dcpp_std=c++20 \
 	-Damfcodec=disabled \
